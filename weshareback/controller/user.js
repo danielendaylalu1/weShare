@@ -33,3 +33,24 @@ userRouter.get("/:id", async (req, res) => {
     });
   }
 });
+
+userRouter.post("/signup", async (req, res) => {
+  try {
+    let newuser = req.body;
+    console.log(newuser); //console
+
+    newuser = new User(user);
+    console.log(newuser); //console
+
+    const user = await newuser.save();
+    console.log(user); //console
+
+    return res.status(201).json(user);
+  } catch (error) {
+    console.log(error); //console
+
+    return res.json(400).json({
+      error: error.message,
+    });
+  }
+});

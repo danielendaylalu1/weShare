@@ -3,7 +3,7 @@ const Post = require("../models/post");
 
 postRouter.get("/", async (req, res) => {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).populate("user");
     console.log(posts); //console
 
     return res.status(200).json(posts);
@@ -21,7 +21,7 @@ postRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id); //console
 
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("user");
     console.log(post); //console
 
     return res.status(200).json(post);

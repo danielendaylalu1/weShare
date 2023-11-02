@@ -3,30 +3,30 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, "Please insert username"],
     minLength: 5,
     unique: true,
   },
   name: {
     type: String,
-    required: true,
+    required: [true, "Please insert fullname"],
   },
   passwordHash: {
     type: String,
-    required: true,
+    required: [true, "Please insert a minlength 6 password"],
     minLength: 6,
   },
   phoneNumber: {
     type: String,
-    required: true,
+    required: [true, "Please insert your phonenumber"],
     validate: {
       validator: function (v) {
-        return /\d{13}/.test(v);
+        return /\d{10}/.test(v);
       },
       message: (props) => `${props.value} is not a valid phone number!`,
     },
   },
-  post: [
+  posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",

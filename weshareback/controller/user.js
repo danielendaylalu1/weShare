@@ -1,9 +1,10 @@
 const User = require("../models/user");
 const userRouter = require("express").Router();
+const bcrypt = require("bcrypt");
 
 userRouter.get("/", async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).populate("posts");
     console.log(users); //console
 
     return res.status(200).json(users);
@@ -21,7 +22,7 @@ userRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id); //console
 
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("posts");
     console.log(user); //console
 
     return res.status(200).json(user);
@@ -36,20 +37,32 @@ userRouter.get("/:id", async (req, res) => {
 
 userRouter.post("/signup", async (req, res) => {
   try {
-    let newuser = req.body;
-    console.log(newuser); //console
+    let { username, name, password, phoneNumber } = req.body;
+    console.log(req.body); //console
 
-    newuser = new User(user);
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    newuser = new User({
+      username,
+      name,
+      passwordHash,
+      phoneNumber,
+    });
     console.log(newuser); //console
 
     const user = await newuser.save();
-    console.log(user); //console
+    console.log(JSON.stringify(user)); //console
 
-    return res.status(201).json(user);
+    return res.status(201).json({
+      username: user.username,
+      name: user.name,
+      phoneNumber: user.phoneNumber,
+      id: user.id,
+    });
   } catch (error) {
     console.log(error); //console
 
-    return res.json(400).json({
+    return res.status(400).json({
       error: error.message,
     });
   }

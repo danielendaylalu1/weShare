@@ -65,4 +65,27 @@ postRouter.post("/", async (req, res) => {
   }
 });
 
+postRouter.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedPost = req.body;
+    console.log(id, updatedPost); //console
+
+    const post = await Post.findByIdAndUpdate(id, updatedPost, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    });
+    console.log(post); //console
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error); //console
+
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
 module.exports = postRouter;

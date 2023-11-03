@@ -8,6 +8,7 @@ import closeIcon from "./assets/images/close.svg";
 
 import "./styles/app.css";
 import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 
 function App() {
   const isAuth = true;
@@ -15,9 +16,9 @@ function App() {
   return (
     <>
       <div className="navbar">
-        <a href="#" className="logo">
+        <Link to="/" className="logo">
           weShare
-        </a>
+        </Link>
         <form className="search">
           <button type="submit" className="icon-box">
             <img src={searchIcon} className="search-icon icon" />
@@ -50,8 +51,8 @@ function App() {
         <div className={`nav ${showNav && "show-nav"}`}>
           <ul className="nav-items">
             <li className="nav-item">
-              <a
-                href="#"
+              <Link
+                to="/home"
                 onClick={() => {
                   setShowNav(false);
                 }}
@@ -62,11 +63,11 @@ function App() {
                 </div>
 
                 <span>Home</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a
-                href="#"
+              <Link
+                to="/explore"
                 onClick={() => {
                   setShowNav(false);
                 }}
@@ -76,7 +77,7 @@ function App() {
                   <img src={exploreIcon} className="explore-icon icon" />
                 </div>
                 <span>Explore</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a
@@ -164,6 +165,9 @@ function App() {
             </div>
           )}
         </div>
+      </div>
+      <div>
+        <Outlet />
       </div>
     </>
   );

@@ -2,6 +2,7 @@ a {
   text-decoration: none;
   color: #45474b;
 }
+
 .search-input {
   padding: 5px 20px;
   background-color: whitesmoke;
@@ -11,6 +12,9 @@ a {
 }
 .search {
   position: relative;
+}
+.search button {
+  border: none;
 }
 .search .icon-box {
   position: absolute;

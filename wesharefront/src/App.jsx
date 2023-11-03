@@ -19,9 +19,9 @@ function App() {
           weShare
         </a>
         <form className="search">
-          <div className="icon-box">
+          <button type="submit" className="icon-box">
             <img src={searchIcon} className="search-icon icon" />
-          </div>
+          </button>
           <input type="text" className="search-input" />
         </form>
         <div className="menu">

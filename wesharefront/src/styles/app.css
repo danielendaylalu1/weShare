@@ -1,6 +1,6 @@
 a {
   text-decoration: none;
-  color: black;
+  color: #45474b;
 }
 .search-input {
   padding: 5px 20px;
@@ -18,7 +18,16 @@ a {
 }
 .logo {
   font-size: 30px;
+  font-weight: 600;
 }
+.menu {
+  display: none;
+}
+.menu-icon-box {
+  width: 28px;
+  height: 28px;
+}
+
 .icon-box {
   width: 18px;
   height: 18px;
@@ -37,6 +46,11 @@ a {
 .search {
   display: flex;
   align-items: center;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 50px;
 }
 .nav-items {
   display: flex;
@@ -68,11 +82,63 @@ a {
 }
 .profile-pic-box {
   padding: 5px;
-  border: 1px solid red;
+  border: 1px solid black;
   border-radius: 100%;
   width: 30px;
   height: 30px;
 }
 .profile-pic {
   width: 100%;
+}
+
+@media only screen and (max-width: 1100px) {
+  .nav-items {
+    gap: 35px;
+  }
+  .nav-link span {
+    display: none;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .nav {
+    position: absolute;
+    width: 100%;
+    min-height: 92vh;
+    padding: 20px 0;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    top: 70px;
+    left: -100%;
+    background-color: white;
+    transition: all 0.2s ease-in;
+  }
+  .show-nav {
+    left: 0;
+  }
+  .nav-items {
+    flex-direction: column;
+    gap: 50px;
+  }
+  .nav-item {
+    width: 100%;
+  }
+
+  .nav-link span {
+    display: block;
+  }
+  .profile {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .profile-name {
+    display: none;
+    gap: 30px;
+  }
+  .sign {
+    flex-direction: column;
+  }
+  .menu {
+    display: block;
+  }
 }

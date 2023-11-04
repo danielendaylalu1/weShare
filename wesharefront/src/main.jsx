@@ -2,8 +2,15 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./styles/main.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import ErrorPage from "./ErrorPage.jsx";
+import SignPage from "./pages/SignPage.jsx";
+import Signin from "./components/Signin.jsx";
+import SignUp from "./components/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +18,16 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "/",
+        element: <Navigate to="/home" replace />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/home",
+        element: <div>Home</div>,
+        errorElement: <ErrorPage />,
+      },
       {
         path: "/explore",
         element: <div>Explore</div>,
@@ -28,12 +45,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/signin",
-        element: <div>signin</div>,
+        element: (
+          <SignPage>
+            <Signin />
+          </SignPage>
+        ),
         errorElement: <ErrorPage />,
       },
       {
         path: "/signup",
-        element: <div>signup</div>,
+        element: (
+          <SignPage>
+            <SignUp />
+          </SignPage>
+        ),
         errorElement: <ErrorPage />,
       },
     ],

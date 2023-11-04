@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 function App() {
-  const isAuth = true;
+  const isAuth = false;
   const [showNav, setShowNav] = useState(false);
   return (
     <>
@@ -52,7 +52,7 @@ function App() {
           <ul className="nav-items">
             <li className="nav-item">
               <Link
-                to="/home"
+                to="/"
                 onClick={() => {
                   setShowNav(false);
                 }}
@@ -144,24 +144,24 @@ function App() {
             </div>
           ) : (
             <div className="sign">
-              <a
-                href="#"
+              <Link
+                to="/signin"
                 onClick={() => {
                   setShowNav(false);
                 }}
                 className="signin"
               >
                 Login
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/signup"
                 onClick={() => {
                   setShowNav(false);
                 }}
                 className="signup"
               >
                 Signup
-              </a>
+              </Link>
             </div>
           )}
         </div>

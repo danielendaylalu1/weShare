@@ -77,7 +77,7 @@ userRouter.post("/signin", async (req, res) => {
     const passwordCorrect =
       user === null ? false : await bcrypt.compare(password, user.passwordHash);
     if (!(user && passwordCorrect)) {
-      res.json(401).json({
+      return res.status(401).json({
         message: "user name or password not correct",
       });
     }
@@ -91,10 +91,10 @@ userRouter.post("/signin", async (req, res) => {
       expiresIn: 60 * 60,
     });
 
-    res.status(200).json({ token, user: user });
+    return res.status(200).json({ token, user: user });
   } catch (error) {
     console.log(error); //console
-    res.status(400).json({
+    return res.status(400).json({
       error: error.message,
     });
   }

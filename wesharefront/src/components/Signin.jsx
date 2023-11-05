@@ -6,15 +6,29 @@ const Signin = () => {
     username: "",
     password: "",
   });
+  const [message, setMessage] = useState(null);
+
+  const handleLogin = async (data) => {
+    try {
+      const userData = await signUser(data);
+      console.log(userData);
+      setMessage("loged in successfully");
+    } catch (error) {
+      console.log(error);
+      setMessage(error.response.data.message);
+    }
+  };
+
   return (
     <form
       className="form"
       onSubmit={(e) => {
         e.preventDefault();
-        signUser(user);
+        handleLogin(user);
       }}
     >
       <h1>Login</h1>
+      {message && <p>{message}</p>}
       <div className="form-inputs">
         <div className="input-box">
           <label>Username</label>

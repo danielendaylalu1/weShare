@@ -1,6 +1,11 @@
 /* eslint-disable react/prop-types */
+import { getUsers } from "../services/userservices";
 import "../styles/signpage.css";
+import { useEffect } from "react";
 const SignPage = ({ children }) => {
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <div className="container">
       <div className="sign-page">

@@ -1,6 +1,8 @@
+require("dotenv").config();
 const User = require("../models/user");
 const userRouter = require("express").Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 userRouter.get("/", async (req, res) => {
   try {
@@ -63,6 +65,36 @@ userRouter.post("/signup", async (req, res) => {
     console.log(error); //console
 
     return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
+userRouter.post("/signin", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username }).populate("posts");
+    const passwordCorrect =
+      user === null ? false : await bcrypt.compare(password, user.passwordHash);
+    if (!(user && passwordCorrect)) {
+      res.json(401).json({
+        message: "user name or password not correct",
+      });
+    }
+    const forTocken = {
+      username: user.username,
+      id: user.id,
+    };
+    const secret = process.env.SECRET;
+    console.log(secret);
+    const token = jwt.sign(forTocken, secret, {
+      expiresIn: 60 * 60,
+    });
+
+    res.status(200).json({ token, user: user });
+  } catch (error) {
+    console.log(error); //console
+    res.status(400).json({
       error: error.message,
     });
   }

@@ -1,28 +1,63 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { createUser } from "../services/userservices";
 const SignUp = () => {
+  const [user, setUser] = useState({
+    username: "",
+    name: "",
+    phoneNumber: "",
+    password: "",
+  });
   return (
-    <form className="form">
+    <form
+      className="form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        createUser(user);
+      }}
+    >
       <h1>Sign up</h1>
       <div className="form-inputs">
         <div className="input-box">
           <label>Fullname</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={user.name}
+            onChange={(e) => {
+              setUser((prv) => ({ ...prv, name: e.target.value }));
+            }}
+          />
         </div>
         <div className="input-box">
           <label>Username</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={user.username}
+            onChange={(e) => {
+              setUser((prv) => ({ ...prv, username: e.target.value }));
+            }}
+          />
         </div>
-        <div className="input-box">
-          <label>Email</label>
-          <input type="email" />
-        </div>
+
         <div className="input-box">
           <label>Phone Number</label>
-          <input type="number" />
+          <input
+            type="number"
+            value={user.phoneNumber}
+            onChange={(e) => {
+              setUser((prv) => ({ ...prv, phoneNumber: e.target.value }));
+            }}
+          />
         </div>
         <div className="input-box">
           <label>Password</label>
-          <input type="password" />
+          <input
+            type="password"
+            value={user.password}
+            onChange={(e) => {
+              setUser((prv) => ({ ...prv, password: e.target.value }));
+            }}
+          />
         </div>
         <div className="input-box">
           <label>Confirm Password</label>

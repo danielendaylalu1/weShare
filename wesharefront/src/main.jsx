@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./styles/main.css";
+import store from "./store/store.js";
 
 import {
   createBrowserRouter,
@@ -12,10 +13,16 @@ import SignPage from "./pages/SignPage.jsx";
 import Signin from "./components/Signin.jsx";
 import SignUp from "./components/SignUp.jsx";
 
+import { Provider } from "react-redux";
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

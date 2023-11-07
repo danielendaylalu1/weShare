@@ -15,63 +15,83 @@ import SignUp from "./components/SignUp.jsx";
 
 import { Provider } from "react-redux";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <Provider store={store}>
-        <App />
-      </Provider>
-    ),
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Navigate to="/home" replace />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/home",
-        element: <div>Home</div>,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/explore",
-        element: <div>Explore</div>,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/following",
-        element: <div>following</div>,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/profile",
-        element: <div>profile</div>,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/signin",
-        element: (
-          <SignPage>
-            <Signin />
-          </SignPage>
-        ),
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "/signup",
-        element: (
-          <SignPage>
-            <SignUp />
-          </SignPage>
-        ),
-        errorElement: <ErrorPage />,
-      },
-    ],
-  },
-]);
+import { useSelector } from "react-redux/es/hooks/useSelector.js";
+
+export const Main = () => {
+  const user = useSelector((state) => state.user);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "/",
+          element: <Navigate to="/home" replace />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/home",
+          element: <div>Home</div>,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/explore",
+          element: <div>Explore</div>,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/following",
+          element:
+            user === null ? (
+              <Navigate to="/signin" replace />
+            ) : (
+              <div>following</div>
+            ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/profile",
+          element:
+            user === null ? (
+              <Navigate to="/signin" replace />
+            ) : (
+              <div>profile</div>
+            ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/signin",
+          element:
+            user === null ? (
+              <SignPage>
+                <Signin />
+              </SignPage>
+            ) : (
+              <Navigate to="/home" replace />
+            ),
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "/signup",
+          element:
+            user === null ? (
+              <SignPage>
+                <SignUp />
+              </SignPage>
+            ) : (
+              <Navigate to="/home" replace />
+            ),
+          errorElement: <ErrorPage />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={router} />;
+};
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <Provider store={store}>
+    <Main />
+  </Provider>
 );

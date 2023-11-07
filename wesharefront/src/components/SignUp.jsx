@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { createUser } from "../services/userservices";
+import { useNavigate } from "react-router-dom";
+
 const SignUp = () => {
   const [user, setUser] = useState({
     username: "",
@@ -8,12 +10,17 @@ const SignUp = () => {
     phoneNumber: "",
     password: "",
   });
+  const navigate = useNavigate();
+
   return (
     <form
       className="form"
       onSubmit={(e) => {
         e.preventDefault();
         createUser(user);
+        setTimeout(() => {
+          navigate("/signin");
+        }, 1000);
       }}
     >
       <h1>Sign up</h1>

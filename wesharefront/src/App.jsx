@@ -9,9 +9,10 @@ import closeIcon from "./assets/images/close.svg";
 import "./styles/app.css";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
-  const isAuth = false;
+  const isAuth = useSelector((state) => state.user);
   const [showNav, setShowNav] = useState(false);
   return (
     <>
@@ -108,7 +109,7 @@ function App() {
               </a>
             </li>
           </ul>
-          {isAuth ? (
+          {isAuth !== null ? (
             <div className="profile">
               <div className="profile-box">
                 <div className="profile-pic-box">

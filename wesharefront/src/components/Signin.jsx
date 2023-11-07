@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { signUser } from "../services/userservices";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../store/user";
 const Signin = () => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -11,7 +14,8 @@ const Signin = () => {
   const handleLogin = async (data) => {
     try {
       const userData = await signUser(data);
-      console.log(userData);
+      window.localStorage.setItem("user", userData);
+      dispatch(signInUser(userData));
       setMessage("loged in successfully");
     } catch (error) {
       console.log(error);

@@ -17,8 +17,9 @@ import { Provider } from "react-redux";
 
 import { useSelector } from "react-redux/es/hooks/useSelector.js";
 
-export const Main = () => {
-  const user = useSelector((state) => state.user);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const Main = () => {
+  const { user } = useSelector((state) => state.user);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -90,7 +91,7 @@ export const Main = () => {
   return <RouterProvider router={router} />;
 };
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+root.render(
   <Provider store={store}>
     <Main />
   </Provider>

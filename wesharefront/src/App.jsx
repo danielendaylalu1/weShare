@@ -7,16 +7,34 @@ import menuIcon from "./assets/images/menu.svg";
 import closeIcon from "./assets/images/close.svg";
 
 import "./styles/app.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "./store/user";
 
 function App() {
-  const isAuth = useSelector((state) => state.user);
+  const { user, message } = useSelector((state) => state.user);
+  const [globalMessage, setGlobalMessage] = useState(null);
+  const dispatch = useDispatch();
   const [showNav, setShowNav] = useState(false);
+  useEffect(() => {
+    setGlobalMessage(message);
+    setTimeout(() => {
+      setGlobalMessage(null);
+    }, 2000);
+  }, [message]);
   return (
     <>
       <div className="navbar">
+        {globalMessage && (
+          <p
+            className={`global-message ${
+              globalMessage === "in" ? "global-green" : "global-red"
+            }`}
+          >
+            {globalMessage === "in" ? "logged in successfuly" : "logged out"}
+          </p>
+        )}
         <Link to="/" className="logo">
           weShare
         </Link>
@@ -109,7 +127,7 @@ function App() {
               </a>
             </li>
           </ul>
-          {isAuth !== null ? (
+          {user !== null ? (
             <div className="profile">
               <div className="profile-box">
                 <div className="profile-pic-box">
@@ -136,6 +154,8 @@ function App() {
               <a
                 href="#"
                 onClick={() => {
+                  window.localStorage.removeItem("user");
+                  dispatch(logoutUser(null));
                   setShowNav(false);
                 }}
                 className="logout"

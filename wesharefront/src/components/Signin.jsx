@@ -14,9 +14,11 @@ const Signin = () => {
   const handleLogin = async (data) => {
     try {
       const userData = await signUser(data);
-      window.localStorage.setItem("user", userData);
-      dispatch(signInUser(userData));
       setMessage("loged in successfully");
+      window.localStorage.setItem("user", userData);
+      setTimeout(() => {
+        dispatch(signInUser(userData));
+      }, 1000);
     } catch (error) {
       console.log(error);
       setMessage(error.response.data.message);

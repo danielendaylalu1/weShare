@@ -2,7 +2,19 @@ a {
   text-decoration: none;
   color: #45474b;
 }
-
+.global-message {
+  z-index: 200;
+  position: absolute;
+  top: 80px;
+  text-align: center;
+  border: none;
+}
+.global-red {
+  color: #e50404;
+}
+.global-green {
+  color: #1e8125;
+}
 .search-input {
   padding: 5px 20px;
   background-color: whitesmoke;

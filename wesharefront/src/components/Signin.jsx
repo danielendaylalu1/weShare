@@ -14,7 +14,6 @@ const Signin = () => {
   const handleLogin = async (data) => {
     try {
       const userData = await signUser(data);
-      setMessage("loged in successfully");
       window.localStorage.setItem("user", userData);
       setTimeout(() => {
         dispatch(signInUser(userData));

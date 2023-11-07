@@ -21,7 +21,7 @@ function App() {
     setGlobalMessage(message);
     setTimeout(() => {
       setGlobalMessage(null);
-    }, 2000);
+    }, 1500);
   }, [message]);
   return (
     <>
@@ -99,8 +99,8 @@ function App() {
               </Link>
             </li>
             <li className="nav-item">
-              <a
-                href="#"
+              <Link
+                to="/post"
                 onClick={() => {
                   setShowNav(false);
                 }}
@@ -110,11 +110,11 @@ function App() {
                   <img src={addIcon} className="add-icon icon" />
                 </div>
                 <span>Post</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a
-                href="#"
+              <Link
+                to="/following"
                 onClick={() => {
                   setShowNav(false);
                 }}
@@ -124,35 +124,35 @@ function App() {
                   <img src={followingIcon} className="following-icon icon" />
                 </div>
                 <span>Following</span>
-              </a>
+              </Link>
             </li>
           </ul>
           {user !== null ? (
             <div className="profile">
               <div className="profile-box">
                 <div className="profile-pic-box">
-                  <a
-                    href="#"
+                  <Link
+                    to="/profile"
                     onClick={() => {
                       setShowNav(false);
                     }}
                   >
                     <img src={followingIcon} className="profile-pic" />
-                  </a>
+                  </Link>
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to="/profile"
                   onClick={() => {
                     setShowNav(false);
                   }}
                   className="profile-name"
                 >
                   daniel endaylalu
-                </a>
+                </Link>
               </div>
 
-              <a
-                href="#"
+              <Link
+                to="/signin"
                 onClick={() => {
                   window.localStorage.removeItem("user");
                   dispatch(logoutUser(null));
@@ -161,7 +161,7 @@ function App() {
                 className="logout"
               >
                 <span>Logout</span>
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="sign">

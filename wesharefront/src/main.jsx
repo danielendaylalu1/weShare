@@ -42,6 +42,12 @@ const Main = () => {
           errorElement: <ErrorPage />,
         },
         {
+          path: "/post",
+          element:
+            user === null ? <Navigate to="/signin" replace /> : <div>post</div>,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "/following",
           element:
             user === null ? (

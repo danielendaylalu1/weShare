@@ -15,7 +15,7 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 0 20px;
+  padding: 20px 20px;
 }
 .headers {
   max-width: 1000px;
@@ -30,7 +30,7 @@
 }
 
 .sign-form {
-  max-width: 700px;
+  max-width: 600px;
   flex: 1;
 }
 
@@ -40,6 +40,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
 }
 .form-inputs {
@@ -50,7 +51,12 @@
 .input-box {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
   gap: 10px;
+}
+.input-box label {
+  align-self: flex-start;
 }
 .input-box input {
   padding: 10px 15px;
@@ -58,7 +64,8 @@
   border: 1px solid lightslategray;
   background-color: whitesmoke;
   border-radius: 10px;
-  max-width: 600px;
+  width: 300px;
+  max-width: 100%;
 }
 .form .form-btn {
   padding: 10px;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { signUser } from "../services/userservices";
 import { useDispatch } from "react-redux";
 import { signInUser } from "../store/user";
+import { setTocken } from "../services/postservices";
 const Signin = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -14,7 +15,8 @@ const Signin = () => {
   const handleLogin = async (data) => {
     try {
       const userData = await signUser(data);
-      window.localStorage.setItem("user", userData);
+      window.localStorage.setItem("user", JSON.stringify(userData));
+      setTocken(userData.tocken);
       setTimeout(() => {
         dispatch(signInUser(userData));
       }, 1000);

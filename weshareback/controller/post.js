@@ -38,10 +38,14 @@ postRouter.get("/:id", async (req, res) => {
 });
 
 postRouter.post("/", async (req, res) => {
+  // console.log(req.body, req.headers);
+  const a = req.get("Authorization");
+  console.log(a, "this is a", req.headers, req.body);
   const getUserTocken = (req) => {
-    const authorizaion = req.get("Authorizaion");
-    if (authorizaion && authorizaion.startsWith("Bearer")) {
-      return tocken.replace("Bearer", "").trim();
+    const authorization = req.get("Authorization");
+
+    if (authorization && authorization.startsWith("Bearer")) {
+      return authorization.replace("Bearer", "").trim();
     } else {
       return null;
     }

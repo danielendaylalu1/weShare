@@ -16,6 +16,7 @@ import SignUp from "./components/SignUp.jsx";
 import { Provider } from "react-redux";
 
 import { useSelector } from "react-redux/es/hooks/useSelector.js";
+import Home from "./pages/Home.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const Main = () => {
@@ -33,7 +34,7 @@ const Main = () => {
         },
         {
           path: "/home",
-          element: <div>Home</div>,
+          element: <Home />,
           errorElement: <ErrorPage />,
         },
         {

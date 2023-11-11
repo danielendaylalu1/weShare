@@ -9,6 +9,7 @@ export const setTocken = (newtocken) => {
 export const getPosts = async () => {
   const result = await axios.get("http://localhost:3000/api/posts");
   console.log(result.data); //console
+  return result.data;
 };
 
 export const getPost = async (id) => {
@@ -27,4 +28,9 @@ export const createPost = async (data) => {
   );
 
   console.log(result.data); //console
+};
+
+export const likePost = async (id) => {
+  const result = await axios.put(`http://localhost:3000/api/posts/${id}`);
+  console.log(result);
 };

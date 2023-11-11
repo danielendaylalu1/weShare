@@ -7,6 +7,8 @@ import menuIcon from "./assets/images/menu.svg";
 import closeIcon from "./assets/images/close.svg";
 
 import "./styles/app.css";
+import "./styles/page.css";
+
 import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

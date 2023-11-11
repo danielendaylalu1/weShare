@@ -1,6 +1,8 @@
+require("dotenv").config();
 const postRouter = require("express").Router();
 const Post = require("../models/post");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 postRouter.get("/", async (req, res) => {
   try {
@@ -36,20 +38,36 @@ postRouter.get("/:id", async (req, res) => {
 });
 
 postRouter.post("/", async (req, res) => {
+  const getUserTocken = (req) => {
+    const authorizaion = req.get("Authorizaion");
+    if (authorizaion && authorizaion.startsWith("Bearer")) {
+      return tocken.replace("Bearer", "").trim();
+    } else {
+      return null;
+    }
+  };
   try {
-    const { location, desc, catagories, userId } = req.body;
+    const { location, desc, catagories } = req.body;
     console.log(req.body); //console
+
+    const decodedTocken = jwt.verify(getUserTocken(req), process.env.SECRET);
+    if (!decodedTocken.id) {
+      return res.status(401).json({
+        error: "invalid tocken",
+      });
+    }
+
+    const user = await User.findById(decodedTocken.id);
 
     const newPost = new Post({
       location,
       desc,
       catagories,
-      user: userId,
+      user: user.id,
     });
     const post = await newPost.save();
     console.log(post); //console
 
-    let user = await User.findById(userId);
     console.log(user); //console
 
     user.posts = user.posts.concat(post.id);
@@ -87,5 +105,9 @@ postRouter.put("/:id", async (req, res) => {
     });
   }
 });
+
+// postRouter.put("/like/:{id}", async(req, res)=>{
+
+// })
 
 module.exports = postRouter;

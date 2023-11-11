@@ -15,8 +15,17 @@ const postShema = new mongoose.Schema({
     required: [true, "Please choose at least one category"],
   },
   likes: {
-    type: Number,
-    default: 0,
+    type: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        like: { type: Number, required: true },
+      },
+    ],
+    default: [],
   },
   comment: {
     type: [

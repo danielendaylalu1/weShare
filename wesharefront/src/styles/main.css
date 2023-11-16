@@ -7,8 +7,14 @@
 }
 body {
   font-family: "Ubuntu Mono", monospace;
-  background-color: whitesmoke;
+  background-color: black;
+  color: white;
 }
 ::-webkit-scrollbar {
   width: 0px; /* width of the entire scrollbar */
+}
+a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }

@@ -9,3 +9,6 @@ body {
   font-family: "Ubuntu Mono", monospace;
   background-color: whitesmoke;
 }
+::-webkit-scrollbar {
+  width: 0px; /* width of the entire scrollbar */
+}

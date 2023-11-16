@@ -1,15 +1,17 @@
-function uniteUnique(...arr) {
-  let newArr = [...arr];
-  let original = [];
-  for (let items of newArr) {
-    for (let item of items) {
-      if (!original.includes(item)) {
-        original.push(item);
+var countPrimes = function (n) {
+  let primes = [];
+  for (let i = 2; i < n; i++) {
+    let total = 0;
+    for (let j = 1; j <= i; j++) {
+      if (i % j === 0) {
+        total += 1;
       }
     }
+    if (total === 2) {
+      primes.push(i);
+    }
   }
-  original = original.sort((a, b) => a - b);
-  return original;
-}
+  return primes.length;
+};
 
-console.log(uniteUnique([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]));
+console.log(countPrimes(40000));

@@ -16,6 +16,7 @@ const Signin = () => {
     try {
       const userData = await signUser(data);
       window.localStorage.setItem("user", JSON.stringify(userData));
+      console.log(userData.tocken);
       setTocken(userData.tocken);
       setTimeout(() => {
         dispatch(signInUser(userData));

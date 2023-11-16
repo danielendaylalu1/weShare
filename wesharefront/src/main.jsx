@@ -17,6 +17,7 @@ import { Provider } from "react-redux";
 
 import { useSelector } from "react-redux/es/hooks/useSelector.js";
 import Home from "./pages/Home.jsx";
+import { Post } from "./pages/Post.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const Main = () => {
@@ -44,8 +45,7 @@ const Main = () => {
         },
         {
           path: "/post",
-          element:
-            user === null ? <Navigate to="/signin" replace /> : <div>post</div>,
+          element: user === null ? <Navigate to="/signin" replace /> : <Post />,
           errorElement: <ErrorPage />,
         },
         {

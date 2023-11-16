@@ -42,6 +42,7 @@
 }
 .user-post-catagories {
   display: flex;
+  gap: 5px;
   color: dodgerblue;
 }
 .user-post-feedbacks {

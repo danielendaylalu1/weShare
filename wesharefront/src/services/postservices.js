@@ -3,7 +3,7 @@ import axios from "axios";
 let tocken = null;
 
 export const setTocken = (newtocken) => {
-  tocken = `Bearer ${newtocken}`;
+  return (tocken = `Bearer ${newtocken}`);
 };
 
 export const getPosts = async () => {
@@ -21,13 +21,14 @@ export const createPost = async (data) => {
   const config = {
     headers: { Authorization: tocken },
   };
+  console.log(config);
   const result = await axios.post(
     "http://localhost:3000/api/posts",
     data,
     config
   );
-
   console.log(result.data); //console
+  return result.data;
 };
 
 export const likePost = async (id) => {

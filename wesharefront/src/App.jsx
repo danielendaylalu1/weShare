@@ -2,7 +2,7 @@ import "./styles/app.css";
 
 import Navbar from "./components/Navbar";
 import MobileTopNavbar from "./components/MobileTopNavbar";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 
 const App = () => {

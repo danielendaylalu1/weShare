@@ -9,11 +9,6 @@
   flex-direction: column;
   gap: 80px;
 }
-.nav a {
-  display: flex;
-  gap: 20px;
-  font-size: 18px;
-}
 .profile-navigation {
   display: flex;
   flex-direction: column;
@@ -22,6 +17,7 @@
 @media only screen and (max-width: 500px) {
   .navbar {
     display: none;
+    height: 0;
   }
   .navbar .logo {
     display: none;
@@ -29,17 +25,18 @@
   .navbar-mobile {
     background-color: black;
     z-index: 100;
-    width: 100%;
     display: flex;
-    overflow: hidden;
-    min-height: 20px;
+    /* padding: 20px; */
+    width: 100%;
+    height: 0;
   }
   .navbar-mobile .nav {
     flex-direction: row;
-    width: 100%;
-    gap: 0;
-    margin-bottom: 20px;
     justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    height: 0;
   }
   .navbar-mobile .profile-navigation {
     display: none;

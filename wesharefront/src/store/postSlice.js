@@ -15,6 +15,7 @@ const postSlice = createSlice({
 export const fetchPosts = () => {
   return async (dispatch) => {
     const posts = await getPosts();
+    console.log(posts);
     dispatch(initializePosts(posts));
   };
 };

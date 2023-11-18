@@ -1,17 +1,16 @@
-var countPrimes = function (n) {
-  let primes = [];
-  for (let i = 2; i < n; i++) {
-    let total = 0;
-    for (let j = 1; j <= i; j++) {
-      if (i % j === 0) {
-        total += 1;
-      }
-    }
-    if (total === 2) {
-      primes.push(i);
-    }
-  }
-  return primes.length;
-};
+function convertHTML(str) {
+  // Use Object Lookup to declare as many HTML entities as needed.
+  const htmlEntities = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&apos;",
+  };
+  // Using a regex, replace characters with it's corresponding html entity
+  return str.replace(/([&<>\"'])/g, (match) => htmlEntities[match]);
+}
 
-console.log(countPrimes(40000));
+// test here
+
+console.log(convertHTML("Hamburgers < Pizza < Tacos"));

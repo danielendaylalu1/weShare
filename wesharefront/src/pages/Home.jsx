@@ -1,36 +1,47 @@
-// import { useEffect } from "react";
-// import { useDispatch } from "react-redux";
-// import { fetchPosts } from "../store/postSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../store/postSlice";
 
 import { useQuery } from "react-query";
 import { getPosts } from "../services/postservices";
 
-const Home = () => {
-  //   const dispatch = useDispatch();
-  //   useEffect(() => {
-  //     dispatch(fetchPosts());
-  //   }, []);
-  const result = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
-    refetchOnWindowFocus: false,
-    retry: 1,
-  });
+import "./home.css";
 
-  if (result.isPending) {
-    return <div>pending.....</div>;
-  }
+const Home = () => {
+  const posts = useSelector((state) => state.post);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
+  //   const result = useQuery({
+  //     queryKey: ["posts"],
+  //     queryFn: getPosts,
+  //     refetchOnWindowFocus: false,
+  //     retry: 1,
+  //   });
+
+  //   if (result.isPending) {
+  //     return <div>pending.....</div>;
+  //   }
   //   if (result.isError) {
   //     return <div>{result.error.message}</div>;
   //   }
   return (
-    <div>
-      Contrary to popular belief, Lorem Ipsum is not simply random text. It has
-      roots in a piece of classical Latin literature from 45 BC, making it over
-      2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
-      College in Virginia, looked up one of the more obscure Latin words,
-      consectetur, from a Lorem Ipsum passage, and going through the cites of
-      the word in classical literature, discovered the undoubtable source. Lorem
+    <div className="home">
+      <div className="posts">
+        {posts.map((post) => {
+          return (
+            <div key={post.id} className="post">
+              <h1>{post.user.name[0]}</h1>
+              <h2>{post.desc}</h2>
+              <h3>{post.location}</h3>
+              {post.catagories.map((catag, index) => {
+                return <span key={index}>#{catag}</span>;
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

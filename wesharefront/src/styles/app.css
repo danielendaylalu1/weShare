@@ -51,6 +51,7 @@
     flex: 0;
   }
   .outlet {
+    padding: 20px 5px;
     order: 2;
     flex: 1;
   }

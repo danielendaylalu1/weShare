@@ -1,10 +1,12 @@
 import "./styles/app.css";
 
 import Navbar from "./components/Navbar";
+import MobileTopNavbar from "./components/MobileTopNavbar";
 
 const App = () => {
   return (
     <div className="app">
+      <MobileTopNavbar />
       <Navbar />
       <div className="outlet">
         Contrary to popular belief, Lorem Ipsum is not simply random text. It

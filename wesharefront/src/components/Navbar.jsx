@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 const Navbar = () => {
   const navItems = [
-    { header: "Home", icon: faHome, link: "/home" },
+    { header: "Home", icon: faHome, link: "/" },
     { header: "Explore", icon: faCompass, link: "/explore" },
     { header: "Search", icon: faSearch, link: "/search" },
     { header: "Post", icon: faCirclePlus, link: "/post" },
@@ -30,13 +30,11 @@ const Navbar = () => {
           );
         })}
       </div>
-      <div className="profile">
+      <div className="profile-navigation">
         <h3>
-          <a href="">D</a>
+          <Link to="/profile">D</Link>
         </h3>
-        <a href="" className="profile-logout">
-          logout
-        </a>
+        <p className="profile-logout">logout</p>
       </div>
     </div>
   );

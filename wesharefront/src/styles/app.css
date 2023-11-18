@@ -41,7 +41,14 @@
   }
 }
 @media only screen and (max-width: 500px) {
+  .app {
+    flex-direction: column;
+    max-height: 100dvh;
+  }
   .outlet {
-    max-height: 95dvh;
+    order: 2;
+  }
+  .navbar-mobile {
+    order: 3;
   }
 }

@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/postSlice";
 
-import { useQuery } from "react-query";
-import { getPosts } from "../services/postservices";
+// import { useQuery } from "react-query";
+// import { getPosts } from "../services/postservices";
 
 import "./home.css";
 

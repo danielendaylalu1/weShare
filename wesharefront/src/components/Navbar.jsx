@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const navItems = [
     { header: "Home", icon: faHome, link: "/" },
@@ -16,6 +17,7 @@ const Navbar = () => {
     { header: "Post", icon: faCirclePlus, link: "/post" },
     { header: "Followers", icon: faUsers, link: "/followers" },
   ];
+  const user = useSelector((state) => state.user);
   return (
     <div className="navbar navbar-mobile">
       <div className="logo">
@@ -30,12 +32,21 @@ const Navbar = () => {
           );
         })}
       </div>
-      <div className="profile-navigation">
-        <h3>
-          <Link to="/profile">D</Link>
-        </h3>
-        <p className="profile-logout">logout</p>
-      </div>
+      {user ? (
+        <div className="profile-navigation">
+          <h3>
+            <Link to="/profile">D</Link>
+          </h3>
+          <p className="profile-logout">logout</p>
+        </div>
+      ) : (
+        <div className="profile-navigation">
+          <h3>
+            <Link to="/signin">SIGNIN</Link>
+          </h3>
+          <Link to="/signup">SIGNUP</Link>
+        </div>
+      )}
     </div>
   );
 };

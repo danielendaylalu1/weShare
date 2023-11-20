@@ -1,4 +1,5 @@
 import "./sign.css";
+import { Link } from "react-router-dom";
 const SignIn = () => {
   return (
     <div className="signLayout">
@@ -17,6 +18,10 @@ const SignIn = () => {
 
           <div>
             <button type="submit">Login</button>
+          </div>
+          <div className="sign-or-link">
+            <span>or</span>
+            <Link to="/signup"> Sign up</Link>
           </div>
         </div>
       </form>

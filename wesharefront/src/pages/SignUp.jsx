@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import "./sign.css";
 const SignUp = () => {
   return (
     <div className="signLayout">
-      <h2>Wellcome again</h2>
+      <h2>Join and share your moment</h2>
       <h3>SignUp</h3>
       <form className="form">
         <div className="sign-form">
@@ -22,9 +23,17 @@ const SignUp = () => {
             <label>Password</label>
             <input type="password" placeholder="******" />
           </div>
+          <div>
+            <label>Confirm password</label>
+            <input type="password" placeholder="******" />
+          </div>
 
           <div>
             <button type="submit">Sign up</button>
+          </div>
+          <div className="sign-or-link">
+            <span>or</span>
+            <Link to="/signin">Sign in</Link>
           </div>
         </div>
       </form>

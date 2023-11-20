@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -54,11 +55,7 @@ const App = () => {
           <Route
             path="/signup"
             element={
-              user ? (
-                <Navigate to="/profile" replace={true} />
-              ) : (
-                <div>signup</div>
-              )
+              user ? <Navigate to="/profile" replace={true} /> : <SignUp />
             }
           />
         </Routes>

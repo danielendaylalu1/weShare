@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/postSlice";
+import { Link } from "react-router-dom";
 
 // import { useQuery } from "react-query";
 // import { getPosts } from "../services/postservices";
 
 import "./home.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark, faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const posts = useSelector((state) => state.post);
@@ -32,12 +36,47 @@ const Home = () => {
         {posts.map((post) => {
           return (
             <div key={post.id} className="post">
-              <h1>{post.user.name[0]}</h1>
-              <h2>{post.desc}</h2>
-              <h3>{post.location}</h3>
-              {post.catagories.map((catag, index) => {
-                return <span key={index}>#{catag}</span>;
-              })}
+              <div className="post-user-profile">
+                <Link className="user-profile-img">{post.user.name[0]}</Link>
+                <Link>{post.user.name}</Link>
+              </div>
+              <h2 className="post-desc">{post.desc}</h2>
+              <h3 className="post-location">
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  className="location-icon"
+                />
+                {post.location}
+              </h3>
+              <div className="post-img-box"></div>
+              <div className="post-catagories">
+                {post.catagories.map((catag, index) => {
+                  return (
+                    <span key={index} className="post-catagory">
+                      #{catag}
+                    </span>
+                  );
+                })}
+              </div>
+
+              <div className="post-feedback">
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className="feedback-icon feedback-like"
+                />
+                <form className="post-comment-form">
+                  <input type="text" placeholder="palce comment" />
+                  <button type="submit">post</button>
+                </form>
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  className="feedback-icon feedback-save"
+                />
+              </div>
+              <div className="post-feedback-total">
+                <p>{`${post.likes.length}`} likes</p>
+                <p>{`${post.comment.length}`} comment</p>
+              </div>
             </div>
           );
         })}

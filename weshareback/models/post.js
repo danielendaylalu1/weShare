@@ -22,7 +22,6 @@ const postShema = new mongoose.Schema({
           ref: "User",
           required: true,
         },
-        like: { type: Number, required: true },
       },
     ],
     default: [],

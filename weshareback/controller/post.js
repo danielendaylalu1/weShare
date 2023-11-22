@@ -130,18 +130,30 @@ postRouter.put("/like/:id", async (req, res) => {
     }
 
     const user = await User.findById(id);
-    console.log(user);
-    const updatedPost = {
-      likes: req.body.likes.concat({ user: user._id }),
-    };
-    console.log(user._id, updatedPost);
+    // console.log(user);
+    const userLiked = req.body.likes.find((like) => {
+      console.log(JSON.stringify(like.user), JSON.stringify(user._id));
+      return JSON.stringify(like.user) === JSON.stringify(user._id);
+    });
+    let updatedPost = null;
+    if (userLiked) {
+      updatedPost = {
+        likes: req.body.likes.filter((like) => like.user !== userLiked.user),
+      };
+    } else {
+      updatedPost = {
+        likes: req.body.likes.concat({ user: user._id }),
+      };
+    }
+
+    // console.log(user._id, updatedPost);
 
     const post = await Post.findByIdAndUpdate(postId, updatedPost, {
       new: true,
       runValidators: true,
       context: "query",
     }).populate("user");
-    console.log(post);
+    // console.log(post);
     return res.status(200).json(post);
   } catch (error) {
     console.log(error);

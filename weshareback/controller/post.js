@@ -132,17 +132,16 @@ postRouter.put("/like/:id", async (req, res) => {
     const user = await User.findById(id);
     // console.log(user);
     const userLiked = req.body.likes.find((like) => {
-      console.log(JSON.stringify(like.user), JSON.stringify(user._id));
-      return JSON.stringify(like.user) === JSON.stringify(user._id);
+      return JSON.stringify(like) === JSON.stringify(user._id);
     });
     let updatedPost = null;
     if (userLiked) {
       updatedPost = {
-        likes: req.body.likes.filter((like) => like.user !== userLiked.user),
+        likes: req.body.likes.filter((like) => like !== userLiked),
       };
     } else {
       updatedPost = {
-        likes: req.body.likes.concat({ user: user._id }),
+        likes: req.body.likes.concat(user._id),
       };
     }
 

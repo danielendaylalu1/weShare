@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, handleComment, handleLike } from "../store/postSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import { useQuery } from "react-query";
 // import { getPosts } from "../services/postservices";
@@ -14,15 +14,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
   const posts = useSelector((state) => state.post);
   const user = JSON.parse(useSelector((state) => state.user));
-
-  const checkLike = (post) => {
-    const likes = post.likes.map((like) => like.user);
-    if (likes.includes(user.id)) {
-      return "liked";
-    } else {
-      return;
-    }
-  };
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -73,10 +65,16 @@ const Home = () => {
               <div className="post-feedback">
                 <FontAwesomeIcon
                   icon={faHeart}
-                  className={`feedback-icon feedback-like ${checkLike(post)}`}
+                  className={`feedback-icon feedback-like ${
+                    post.likes.includes(user.id) && "liked"
+                  }`}
                   onClick={() => {
                     const postId = post.id;
-                    dispatch(handleLike(postId, post));
+                    if (user) {
+                      dispatch(handleLike(postId, post));
+                    } else {
+                      navigate("/signin");
+                    }
                   }}
                 />
                 <form
@@ -84,15 +82,20 @@ const Home = () => {
                   onSubmit={(e) => {
                     e.preventDefault();
                     const comment = e.target.comment.value;
-                    dispatch(
-                      handleComment(post.id, { data: post, text: comment })
-                    );
+                    if (user) {
+                      dispatch(
+                        handleComment(post.id, { data: post, text: comment })
+                      );
+                    } else {
+                      navigate("/signin");
+                    }
+
                     e.target.comment.value = "";
                   }}
                 >
                   <input
                     type="text"
-                    placeholder="palce comment"
+                    placeholder="place comment"
                     name="comment"
                   />
                   <button type="submit">post</button>

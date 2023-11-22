@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../store/postSlice";
+import { fetchPosts, handleLike } from "../store/postSlice";
 import { Link } from "react-router-dom";
 
 // import { useQuery } from "react-query";
@@ -10,10 +10,10 @@ import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { showTocken } from "../services/postservices";
 
 const Home = () => {
   const posts = useSelector((state) => state.post);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPosts());
@@ -66,7 +66,7 @@ const Home = () => {
                   className="feedback-icon feedback-like"
                   onClick={() => {
                     const postId = post.id;
-                    showTocken();
+                    dispatch(handleLike(postId, post));
                   }}
                 />
                 <form className="post-comment-form">

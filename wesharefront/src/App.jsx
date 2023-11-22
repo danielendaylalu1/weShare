@@ -16,10 +16,12 @@ const App = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const user = window.localStorage.getItem("user");
-    const userData = JSON.parse(user);
-    setTocken(userData.tocken);
-    dispatch(initializeUser(user));
+    const userData = window.localStorage.getItem("user");
+    dispatch(initializeUser(userData));
+    if (userData) {
+      const userTocken = JSON.parse(userData);
+      setTocken(userTocken.tocken);
+    }
   }, []);
   return (
     <div className="app">

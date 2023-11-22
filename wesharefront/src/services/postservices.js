@@ -42,7 +42,7 @@ export const likePost = async (id, post) => {
     post,
     config
   );
-  console.log(result);
+  return result.data;
 };
 
 export const showTocken = () => {

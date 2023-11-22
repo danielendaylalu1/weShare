@@ -112,8 +112,8 @@ postRouter.put("/:id", async (req, res) => {
 postRouter.put("/like/:id", async (req, res) => {
   const getUserTocken = (req) => {
     const authorization = req.get("Authorization");
-    if (authorization && authorization.startsWith("Berear")) {
-      return authorization.replace("Berear", "");
+    if (authorization && authorization.startsWith("Bearer")) {
+      return authorization.replace("Bearer", "").trim();
     } else {
       return null;
     }
@@ -121,18 +121,27 @@ postRouter.put("/like/:id", async (req, res) => {
   try {
     const postId = req.params.id;
     const secret = process.env.SECRET;
-    const updatedPost = req.body;
     const { id } = jwt.verify(getUserTocken(req), secret);
+
     if (!id) {
       return res.status(401).json({
         error: "envalid tocken",
       });
     }
-    const post = Post.findByIdAndUpdate(id, updatedPost, {
+
+    const user = await User.findById(id);
+    console.log(user);
+    const updatedPost = {
+      likes: req.body.likes.concat({ user: user._id }),
+    };
+    console.log(user._id, updatedPost);
+
+    const post = await Post.findByIdAndUpdate(postId, updatedPost, {
       new: true,
       runValidators: true,
       context: "query",
-    });
+    }).populate("user");
+    console.log(post);
     return res.status(200).json(post);
   } catch (error) {
     console.log(error);

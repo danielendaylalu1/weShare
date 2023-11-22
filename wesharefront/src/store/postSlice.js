@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getPosts, likePost } from "../services/postservices";
+import { commentPost, getPosts, likePost } from "../services/postservices";
 
 const postSlice = createSlice({
   name: "post",
@@ -31,6 +31,13 @@ export const handleLike = (id, data) => {
   return async (dispatch) => {
     const updatedPost = await likePost(id, data);
     console.log(updatedPost);
+    dispatch(updatePost(updatedPost));
+  };
+};
+
+export const handleComment = (id, data) => {
+  return async (dispatch) => {
+    const updatedPost = await commentPost(id, data);
     dispatch(updatePost(updatedPost));
   };
 };

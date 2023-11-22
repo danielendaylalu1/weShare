@@ -151,6 +151,50 @@ postRouter.put("/like/:id", async (req, res) => {
   }
 });
 
+postRouter.put("/comment/:id", async (req, res) => {
+  const getUserTocken = (req) => {
+    const authorization = req.get("Authorization");
+    if (authorization && authorization.startsWith("Bearer")) {
+      return authorization.replace("Bearer", "").trim();
+    } else {
+      return null;
+    }
+  };
+  try {
+    const postId = req.params.id;
+    const secret = process.env.SECRET;
+    const { id } = jwt.verify(getUserTocken(req), secret);
+
+    if (!id) {
+      return res.status(401).json({
+        error: "envalid tocken",
+      });
+    }
+
+    const user = await User.findById(id);
+    console.log(user);
+    const updatedPost = {
+      comment: req.body.data.comment.concat({
+        user: user._id,
+        text: req.body.text,
+      }),
+    };
+    console.log(user._id, updatedPost);
+
+    const post = await Post.findByIdAndUpdate(postId, updatedPost, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    }).populate("user");
+    console.log(post);
+    return res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
 // postRouter.put("/like/:{id}", async(req, res)=>{
 
 // })

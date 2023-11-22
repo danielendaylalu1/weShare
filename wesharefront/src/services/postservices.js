@@ -44,7 +44,15 @@ export const likePost = async (id, post) => {
   );
   return result.data;
 };
-
-export const showTocken = () => {
-  console.log(tocken);
+export const commentPost = async (id, data) => {
+  const config = {
+    headers: { Authorization: tocken },
+  };
+  console.log(config);
+  const result = await axios.put(
+    `http://localhost:3000/api/posts/comment/${id}`,
+    data,
+    config
+  );
+  return result.data;
 };

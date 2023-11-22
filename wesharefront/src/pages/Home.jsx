@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, handleLike } from "../store/postSlice";
+import { fetchPosts, handleComment, handleLike } from "../store/postSlice";
 import { Link } from "react-router-dom";
 
 // import { useQuery } from "react-query";
@@ -69,8 +69,22 @@ const Home = () => {
                     dispatch(handleLike(postId, post));
                   }}
                 />
-                <form className="post-comment-form">
-                  <input type="text" placeholder="palce comment" />
+                <form
+                  className="post-comment-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const comment = e.target.comment.value;
+                    dispatch(
+                      handleComment(post.id, { data: post, text: comment })
+                    );
+                    e.target.comment.value = "";
+                  }}
+                >
+                  <input
+                    type="text"
+                    placeholder="palce comment"
+                    name="comment"
+                  />
                   <button type="submit">post</button>
                 </form>
                 <FontAwesomeIcon

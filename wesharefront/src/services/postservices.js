@@ -3,6 +3,7 @@ import axios from "axios";
 let tocken = null;
 
 export const setTocken = (newtocken) => {
+  console.log(newtocken);
   return (tocken = `Bearer ${newtocken}`);
 };
 
@@ -31,7 +32,19 @@ export const createPost = async (data) => {
   return result.data;
 };
 
-export const likePost = async (id) => {
-  const result = await axios.put(`http://localhost:3000/api/posts/${id}`);
+export const likePost = async (id, post) => {
+  const config = {
+    headers: { Authorization: tocken },
+  };
+  console.log(config);
+  const result = await axios.put(
+    `http://localhost:3000/api/posts/like/${id}`,
+    post,
+    config
+  );
   console.log(result);
+};
+
+export const showTocken = () => {
+  console.log(tocken);
 };

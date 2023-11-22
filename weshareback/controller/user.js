@@ -37,6 +37,36 @@ userRouter.get("/:id", async (req, res) => {
   }
 });
 
+userRouter.get("/profile", async (req, res) => {
+  const getTocken = (req) => {
+    let authorization = req.get("Authorization");
+    if (authorization && authorization.startsWith("Berear")) {
+      return authorization.replace("Berear", "");
+    } else {
+      return null;
+    }
+  };
+  try {
+    const secret = process.env.SECRET;
+    const { id } = jwt.verify(getTocken(req), secret);
+    if (!id) {
+      return res.status(400).json({
+        error: "envalid tocken",
+      });
+    }
+
+    const user = await User.findById({ id }).populate("posts");
+    res.status(200).json(user);
+
+    // const
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
 userRouter.post("/signup", async (req, res) => {
   try {
     let { username, name, password, phoneNumber } = req.body;

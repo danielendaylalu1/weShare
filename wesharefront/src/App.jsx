@@ -5,12 +5,22 @@ import MobileTopNavbar from "./components/MobileTopNavbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import { useEffect } from "react";
+import { initializeUser } from "./store/userSlice";
+import { setTocken } from "./services/postservices";
 
 const App = () => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const user = window.localStorage.getItem("user");
+    const userData = JSON.parse(user);
+    setTocken(userData.tocken);
+    dispatch(initializeUser(user));
+  }, []);
   return (
     <div className="app">
       <MobileTopNavbar />

@@ -10,6 +10,7 @@ import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { showTocken } from "../services/postservices";
 
 const Home = () => {
   const posts = useSelector((state) => state.post);
@@ -63,6 +64,10 @@ const Home = () => {
                 <FontAwesomeIcon
                   icon={faHeart}
                   className="feedback-icon feedback-like"
+                  onClick={() => {
+                    const postId = post.id;
+                    showTocken();
+                  }}
                 />
                 <form className="post-comment-form">
                   <input type="text" placeholder="palce comment" />

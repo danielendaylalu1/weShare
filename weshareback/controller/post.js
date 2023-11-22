@@ -39,8 +39,7 @@ postRouter.get("/:id", async (req, res) => {
 
 postRouter.post("/", async (req, res) => {
   // console.log(req.body, req.headers);
-  const a = req.get("Authorization");
-  console.log(a, "this is a", req.headers, req.body);
+
   const getUserTocken = (req) => {
     const authorization = req.get("Authorization");
 
@@ -100,10 +99,43 @@ postRouter.put("/:id", async (req, res) => {
     });
     console.log(post); //console
 
-    res.status(200).json(post);
+    return res.status(200).json(post);
   } catch (error) {
     console.log(error); //console
 
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
+postRouter.put("/like/:id", async (req, res) => {
+  const getUserTocken = (req) => {
+    const authorization = req.get("Authorization");
+    if (authorization && authorization.startsWith("Berear")) {
+      return authorization.replace("Berear", "");
+    } else {
+      return null;
+    }
+  };
+  try {
+    const postId = req.params.id;
+    const secret = process.env.SECRET;
+    const updatedPost = req.body;
+    const { id } = jwt.verify(getUserTocken(req), secret);
+    if (!id) {
+      return res.status(401).json({
+        error: "envalid tocken",
+      });
+    }
+    const post = Post.findByIdAndUpdate(id, updatedPost, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    });
+    return res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
     return res.status(400).json({
       error: error.message,
     });

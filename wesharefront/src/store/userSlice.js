@@ -15,7 +15,7 @@ const userSlice = createSlice({
 export const SignInUser = (data) => {
   return async (dispatch) => {
     const user = await signUser(data);
-    const userToStore = { tocken: user.tocken };
+    const userToStore = { tocken: user.tocken, id: user.user.id };
     window.localStorage.setItem("user", JSON.stringify(userToStore));
     const userData = window.localStorage.getItem("user");
     setTocken(user.tocken);

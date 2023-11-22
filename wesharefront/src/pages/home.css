@@ -76,6 +76,9 @@
 .feedback-like:hover {
   color: red;
 }
+.liked {
+  color: red;
+}
 .feedback-save:hover {
   color: aqua;
 }

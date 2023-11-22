@@ -13,6 +13,16 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const posts = useSelector((state) => state.post);
+  const user = JSON.parse(useSelector((state) => state.user));
+
+  const checkLike = (post) => {
+    const likes = post.likes.map((like) => like.user);
+    if (likes.includes(user.id)) {
+      return "liked";
+    } else {
+      return;
+    }
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -63,7 +73,7 @@ const Home = () => {
               <div className="post-feedback">
                 <FontAwesomeIcon
                   icon={faHeart}
-                  className="feedback-icon feedback-like"
+                  className={`feedback-icon feedback-like ${checkLike(post)}`}
                   onClick={() => {
                     const postId = post.id;
                     dispatch(handleLike(postId, post));

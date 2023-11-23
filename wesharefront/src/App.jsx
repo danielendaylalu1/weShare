@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { initializeUser } from "./store/userSlice";
 import { setTocken } from "./services/postservices";
 import Profile from "./pages/Profile";
+import Search from "./pages/Search";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -32,7 +33,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<div>explore</div>} />
-          <Route path="/search" element={<div>search</div>} />
+          <Route path="/search" element={<Search />} />
           <Route
             path="/post"
             element={

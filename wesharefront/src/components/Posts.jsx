@@ -5,6 +5,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { handleComment, handleLike } from "../store/postSlice";
+import "./posts.css";
 
 const Posts = ({ posts }) => {
   const user = JSON.parse(useSelector((state) => state.user));

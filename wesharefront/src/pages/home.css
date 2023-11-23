@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
 }
 .posts {
   display: flex;
@@ -19,7 +20,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 30px;
   border-radius: 10px;
 }
 .post .post-user-profile {
@@ -98,10 +99,12 @@
 .post-comment-form button {
   background-color: black;
   border: none;
-  color: white;
+  color: lightseagreen;
   cursor: pointer;
   position: absolute;
   right: 0;
+  padding: 5px;
+  border-bottom: 1px solid lightgray;
 }
 .post .post-feedback-total {
   display: flex;
@@ -114,6 +117,9 @@
 }
 @media only screen and (max-width: 500px) {
   .home {
-    padding: 0;
+    padding: 20px 10px;
+  }
+  .post {
+    padding: 20px 10px;
   }
 }

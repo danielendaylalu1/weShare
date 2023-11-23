@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp";
 import { useEffect } from "react";
 import { initializeUser } from "./store/userSlice";
 import { setTocken } from "./services/postservices";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -51,11 +52,7 @@ const App = () => {
           <Route
             path="/profile"
             element={
-              user ? (
-                <div>profile</div>
-              ) : (
-                <Navigate to="/signin" replace={true} />
-              )
+              user ? <Profile /> : <Navigate to="/signin" replace={true} />
             }
           />
           <Route

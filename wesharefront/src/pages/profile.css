@@ -1,0 +1,29 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+}
+.profile-name,
+.profile-desc,
+.profile-nav,
+.profile-post {
+  padding: 15px 20px;
+}
+.profile-name {
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(40px);
+  z-index: 100;
+}
+.profile-desc {
+  background-color: lightgray;
+  z-index: 90;
+}
+.profile-nav {
+  position: sticky;
+  top: 65px;
+  background-color: black;
+}

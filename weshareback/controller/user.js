@@ -19,6 +19,44 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
+userRouter.get("/profile", async (req, res) => {
+  // console.log(req.get("Authorization"), req.headers);
+  const getTocken = (req) => {
+    let authorization = req.get("Authorization");
+    if (authorization && authorization.startsWith("Bearer")) {
+      return authorization.replace("Bearer", "").trim();
+    } else {
+      return null;
+    }
+  };
+  console.log(getTocken(req));
+  try {
+    const secret = process.env.SECRET;
+    const { id } = jwt.verify(getTocken(req), secret);
+    console.log(id);
+    if (!id) {
+      return res.status(400).json({
+        error: "envalid tocken",
+      });
+    }
+
+    const user = await User.findById(id).populate({
+      path: "posts",
+      populate: {
+        path: "user",
+        model: "User",
+      },
+    });
+    // console.log(".........", user);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(400).json({
+      error: error.message,
+    });
+  }
+});
+
 userRouter.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
@@ -31,36 +69,6 @@ userRouter.get("/:id", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
-      error: error.message,
-    });
-  }
-});
-
-userRouter.get("/profile", async (req, res) => {
-  const getTocken = (req) => {
-    let authorization = req.get("Authorization");
-    if (authorization && authorization.startsWith("Berear")) {
-      return authorization.replace("Berear", "");
-    } else {
-      return null;
-    }
-  };
-  try {
-    const secret = process.env.SECRET;
-    const { id } = jwt.verify(getTocken(req), secret);
-    if (!id) {
-      return res.status(400).json({
-        error: "envalid tocken",
-      });
-    }
-
-    const user = await User.findById({ id }).populate("posts");
-    res.status(200).json(user);
-
-    // const
-  } catch (error) {
-    console.log(error.message);
     return res.status(400).json({
       error: error.message,
     });

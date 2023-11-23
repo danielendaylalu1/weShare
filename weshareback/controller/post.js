@@ -6,7 +6,13 @@ const jwt = require("jsonwebtoken");
 
 postRouter.get("/", async (req, res) => {
   try {
-    const posts = await Post.find({}).populate("user");
+    const posts = await Post.find({}).populate({
+      path: "user",
+      populate: {
+        path: "posts",
+        model: "Post",
+      },
+    });
     console.log(posts); //console
 
     return res.status(200).json(posts);

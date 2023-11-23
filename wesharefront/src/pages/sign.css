@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
   width: 100%;
   flex: 1;
   gap: 30px;
-  padding: 0 5px;
+  padding: 20px 5px;
 }
 .signLayout h2 {
   text-align: center;

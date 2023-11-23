@@ -1,4 +1,5 @@
 import axios from "axios";
+import { tocken } from "./postservices";
 
 export const getUsers = async () => {
   const result = await axios.get("http://localhost:3000/api/users");
@@ -9,6 +10,21 @@ export const getUsers = async () => {
 export const getUser = async (id) => {
   const result = await axios.get(`http://localhost:3000/api/users/${id}`);
   console.log(result.data);
+  return result.data;
+};
+
+export const getProfile = async () => {
+  const config = {
+    headers: {
+      Authorization: tocken,
+    },
+  };
+  console.log(config);
+  const result = await axios.get(
+    `http://localhost:3000/api/users/profile`,
+    config
+  );
+  console.log(result);
   return result.data;
 };
 

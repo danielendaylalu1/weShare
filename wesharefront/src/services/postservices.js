@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let tocken = null;
+export let tocken = null;
 
 export const setTocken = (newtocken) => {
   console.log(newtocken);

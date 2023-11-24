@@ -2,19 +2,21 @@ import axios from "axios";
 
 export let tocken = null;
 
+const BASE_URI = `${import.meta.env.VITE_BASE_URI}posts`;
+
 export const setTocken = (newtocken) => {
   console.log(newtocken);
   return (tocken = `Bearer ${newtocken}`);
 };
 
 export const getPosts = async () => {
-  const result = await axios.get("http://localhost:3000/api/posts");
+  const result = await axios.get(`${BASE_URI}`);
   console.log(result.data); //console
   return result.data;
 };
 
 export const getPost = async (id) => {
-  const result = await axios.get(`http://localhost:3000/api/posts/${id}`);
+  const result = await axios.get(`${BASE_URI}/${id}`);
   console.log(result.data); //console
 };
 
@@ -23,11 +25,7 @@ export const createPost = async (data) => {
     headers: { Authorization: tocken },
   };
   console.log(config);
-  const result = await axios.post(
-    "http://localhost:3000/api/posts",
-    data,
-    config
-  );
+  const result = await axios.post(`${BASE_URI}`, data, config);
   console.log(result.data); //console
   return result.data;
 };
@@ -37,11 +35,7 @@ export const likePost = async (id, post) => {
     headers: { Authorization: tocken },
   };
   console.log(config);
-  const result = await axios.put(
-    `http://localhost:3000/api/posts/like/${id}`,
-    post,
-    config
-  );
+  const result = await axios.put(`${BASE_URI}/like/${id}`, post, config);
   return result.data;
 };
 export const commentPost = async (id, data) => {
@@ -49,10 +43,6 @@ export const commentPost = async (id, data) => {
     headers: { Authorization: tocken },
   };
   console.log(config);
-  const result = await axios.put(
-    `http://localhost:3000/api/posts/comment/${id}`,
-    data,
-    config
-  );
+  const result = await axios.put(`${BASE_URI}/comment/${id}`, data, config);
   return result.data;
 };

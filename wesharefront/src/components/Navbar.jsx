@@ -6,9 +6,10 @@ import {
   faSearch,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutUser } from "../store/userSlice";
 const Navbar = () => {
   const navItems = [
     { header: "Home", icon: faHome, link: "/" },
@@ -18,6 +19,10 @@ const Navbar = () => {
     { header: "Followers", icon: faUsers, link: "/followers" },
   ];
   const user = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   return (
     <div className="navbar navbar-mobile">
       <div className="logo">
@@ -37,7 +42,15 @@ const Navbar = () => {
           <h3>
             <Link to="/profile">D</Link>
           </h3>
-          <p className="profile-logout">logout</p>
+          <p
+            className="profile-logout"
+            onClick={() => {
+              dispatch(logOutUser(null));
+              navigate("/signin");
+            }}
+          >
+            logout
+          </p>
         </div>
       ) : (
         <div className="profile-navigation">

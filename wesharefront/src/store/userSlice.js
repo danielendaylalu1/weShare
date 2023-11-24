@@ -9,6 +9,10 @@ const userSlice = createSlice({
     initializeUser(state, action) {
       return (state = action.payload);
     },
+    logOutUser(state, action) {
+      window.localStorage.removeItem("user");
+      return (state = action.payload);
+    },
   },
 });
 
@@ -23,5 +27,5 @@ export const SignInUser = (data) => {
   };
 };
 
-export const { initializeUser } = userSlice.actions;
+export const { initializeUser, logOutUser } = userSlice.actions;
 export default userSlice.reducer;

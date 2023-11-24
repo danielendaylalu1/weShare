@@ -13,6 +13,7 @@ import { initializeUser } from "./store/userSlice";
 import { setTocken } from "./services/postservices";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
+import Post from "./pages/Post";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -36,9 +37,7 @@ const App = () => {
           <Route path="/search" element={<Search />} />
           <Route
             path="/post"
-            element={
-              user ? <div>post</div> : <Navigate to="/signin" replace={true} />
-            }
+            element={user ? <Post /> : <Navigate to="/signin" replace={true} />}
           />
           <Route
             path="/followers"

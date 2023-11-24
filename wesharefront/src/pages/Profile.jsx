@@ -70,7 +70,11 @@ const Profile = () => {
       </div>
       <div className="profile-post">
         {user && current === "post" ? (
-          <Posts posts={user.posts} />
+          user.posts.length === 0 ? (
+            <div>no post posted yet</div>
+          ) : (
+            <Posts posts={user.posts} />
+          )
         ) : current === "following" ? (
           <div>{current}</div>
         ) : (

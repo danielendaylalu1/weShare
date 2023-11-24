@@ -3,6 +3,7 @@ const postRouter = require("express").Router();
 const Post = require("../models/post");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 postRouter.get("/", async (req, res) => {
   try {
@@ -72,17 +73,19 @@ postRouter.post("/", async (req, res) => {
       location,
       desc,
       catagories,
-      user: user.id,
+      user: new mongoose.Types.ObjectId(user.id),
     });
     const post = await newPost.save();
+    const populatedPost = await Post.findById(post._id).populate("user");
     console.log(post); //console
 
     console.log(user); //console
 
     user.posts = user.posts.concat(post.id);
+
     await user.save();
 
-    return res.status(201).json(post);
+    return res.status(201).json(populatedPost);
   } catch (error) {
     console.log(error); //console
 

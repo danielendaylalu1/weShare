@@ -4,29 +4,51 @@ import "./sign.css";
 import { useState } from "react";
 import { createUser } from "../services/userservices";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setError, setLoading } from "../store/uiSlice";
 
 const SignUp = () => {
+  const { loading, error } = useSelector((state) => state.ui);
   const [user, setUser] = useState({
     name: "",
     username: "",
     phoneNumber: "",
     password: "",
   });
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const createNewUser = async (data) => {
     try {
+      dispatch(setLoading(true));
       await createUser(data);
-      navigate("/signin");
+      dispatch(setLoading(null));
+      dispatch(setError(null));
+      setTimeout(() => {
+        navigate("/signin");
+      }, 2000);
     } catch (error) {
       console.log(error);
+      dispatch(setLoading(null));
+      if (error.response) {
+        dispatch(
+          setError(error.response.data.message || error.response.data.error)
+        );
+      } else {
+        dispatch(setError(error.message));
+      }
     }
   };
   return (
     <div className="signLayout">
       <h2>Join and share your moment</h2>
       <h3>SignUp</h3>
+      {loading ? (
+        <p>on proccess</p>
+      ) : error ? (
+        <p style={{ color: "red" }}>{error}</p>
+      ) : null}
       <form
         className="form"
         onSubmit={(e) => {
@@ -34,9 +56,9 @@ const SignUp = () => {
           console.log(user);
           createNewUser(user);
           setUser({
-            fullname: "",
+            name: "",
             username: "",
-            phonenumber: "",
+            phoneNumber: "",
             password: "",
           });
         }}

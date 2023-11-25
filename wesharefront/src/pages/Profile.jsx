@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import "./profile.css";
 import { getProfile } from "../services/userservices";
 import Posts from "../components/Posts";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOutUser } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const postsData = useSelector((state) => state.post);
@@ -12,14 +14,21 @@ const Profile = () => {
   const likes = user && user.posts.map((post) => post.likes.length);
   console.log(likes);
   const totalLikes = likes && likes.reduce((a, b) => a + b, 0);
-  // console.log(totalLikes);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const profileHandler = async () => {
     try {
       const data = await getProfile();
-
       setUser(data);
     } catch (error) {
-      console.log(error);
+      const errorMessage = error.response.data;
+      if (errorMessage.error == "jwt expired") {
+        window.localStorage.removeItem("user");
+        dispatch(logOutUser(null));
+        navigate("/signin");
+      }
     }
   };
   useEffect(() => {
@@ -41,6 +50,15 @@ const Profile = () => {
           <p>{user && user.username}</p>
         </div>
         <p>total likes {user && totalLikes}</p>
+        <p
+          className="profile-logout-mobile"
+          onClick={() => {
+            dispatch(logOutUser(null));
+            navigate("/signin");
+          }}
+        >
+          logout
+        </p>
       </div>
       <div className="profile-nav">
         <p

@@ -13,7 +13,7 @@ userRouter.get("/", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -51,7 +51,7 @@ userRouter.get("/profile", async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log(error.message);
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -69,7 +69,7 @@ userRouter.get("/:id", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -102,7 +102,7 @@ userRouter.post("/signup", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -132,7 +132,7 @@ userRouter.post("/signin", async (req, res) => {
     return res.status(200).json({ tocken, user: user });
   } catch (error) {
     console.log(error); //console
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }

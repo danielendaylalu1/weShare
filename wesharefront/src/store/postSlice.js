@@ -6,6 +6,7 @@ import {
   getPosts,
   likePost,
 } from "../services/postservices";
+import { setError, setLoading } from "./uiSlice";
 
 const postSlice = createSlice({
   name: "post",
@@ -29,9 +30,17 @@ const postSlice = createSlice({
 
 export const fetchPosts = () => {
   return async (dispatch) => {
-    const posts = await getPosts();
-    console.log(posts);
-    dispatch(initializePosts(posts));
+    try {
+      dispatch(setLoading(true));
+      const posts = await getPosts();
+      dispatch(initializePosts(posts));
+      dispatch(setLoading(null));
+      dispatch(setError(null));
+    } catch (error) {
+      console.log(error, "here");
+      dispatch(setLoading(null));
+      dispatch(setError(error.message));
+    }
   };
 };
 

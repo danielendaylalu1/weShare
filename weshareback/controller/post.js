@@ -20,7 +20,7 @@ postRouter.get("/", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -38,7 +38,7 @@ postRouter.get("/:id", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -89,7 +89,7 @@ postRouter.post("/", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -112,7 +112,7 @@ postRouter.put("/:id", async (req, res) => {
   } catch (error) {
     console.log(error); //console
 
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -165,7 +165,7 @@ postRouter.put("/like/:id", async (req, res) => {
     return res.status(200).json(post);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }
@@ -210,7 +210,7 @@ postRouter.put("/comment/:id", async (req, res) => {
     return res.status(200).json(post);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({
+    return res.status(404).json({
       error: error.message,
     });
   }

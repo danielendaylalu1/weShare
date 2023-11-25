@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./sign.css";
 import { Link } from "react-router-dom";
 import { SignInUser } from "../store/userSlice";
 import { useState } from "react";
 const SignIn = () => {
+  const { loading, error } = useSelector((state) => state.ui);
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -13,6 +14,7 @@ const SignIn = () => {
     <div className="signLayout">
       <h2>Wellcome again</h2>
       <h3>signin</h3>
+      {loading ? <p>on proccess</p> : error ? <p>{error}</p> : null}
       <form
         className="form"
         onSubmit={(e) => {

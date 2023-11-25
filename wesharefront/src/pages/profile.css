@@ -68,3 +68,15 @@
 
   align-items: center;
 }
+.profile-logout-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 500px) {
+  .profile-logout-mobile {
+    display: block;
+    align-self: flex-start;
+    cursor: pointer;
+    color: red !important;
+  }
+}

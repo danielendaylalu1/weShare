@@ -40,7 +40,7 @@ export const fetchPosts = () => {
       console.log(error, "here");
       dispatch(setLoading(null));
       if (error.response) {
-        dispatch(setError(error.response.data.message));
+        dispatch(setError("something went wrong"));
       } else {
         dispatch(setError(error.message));
       }

@@ -16,7 +16,7 @@ const postSlice = createSlice({
       return (state = action.payload);
     },
     createNewPost(state, action) {
-      return (state = state.concat(action.payload));
+      return (state = [action.payload, ...state]);
     },
     updatePost(state, action) {
       const updatedPost = action.payload;
@@ -32,8 +32,10 @@ export const fetchPosts = () => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      const posts = await getPosts();
-      dispatch(initializePosts(posts.reverse()));
+      let posts = await getPosts();
+      posts = posts.reverse();
+      console.log(posts);
+      dispatch(initializePosts(posts));
       dispatch(setLoading(null));
       dispatch(setError(null));
     } catch (error) {

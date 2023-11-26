@@ -20,7 +20,7 @@ const Posts = ({ posts }) => {
             <div className="post-user">
               <div className="post-user-profile">
                 <Link className="user-profile-img">{post.user.name[0]}</Link>
-                <Link>{post.user.name}</Link>
+                <Link>{post.user.username}</Link>
               </div>
               {!user ? (
                 <div

@@ -22,7 +22,11 @@ export const SignInUser = (data) => {
     try {
       dispatch(setLoading(true));
       const user = await signUser(data);
-      const userToStore = { tocken: user.tocken, id: user.user.id };
+      const userToStore = {
+        tocken: user.tocken,
+        id: user.user.id,
+        name: user.user.username,
+      };
       window.localStorage.setItem("user", JSON.stringify(userToStore));
       const userData = window.localStorage.getItem("user");
       setTocken(user.tocken);

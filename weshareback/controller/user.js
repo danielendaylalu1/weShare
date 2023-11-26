@@ -3,6 +3,16 @@ const User = require("../models/user");
 const userRouter = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+
+const getTocken = (req) => {
+  let authorization = req.get("Authorization");
+  if (authorization && authorization.startsWith("Bearer")) {
+    return authorization.replace("Bearer", "").trim();
+  } else {
+    return null;
+  }
+};
 
 userRouter.get("/", async (req, res) => {
   try {
@@ -21,14 +31,7 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.get("/profile", async (req, res) => {
   // console.log(req.get("Authorization"), req.headers);
-  const getTocken = (req) => {
-    let authorization = req.get("Authorization");
-    if (authorization && authorization.startsWith("Bearer")) {
-      return authorization.replace("Bearer", "").trim();
-    } else {
-      return null;
-    }
-  };
+
   console.log(getTocken(req));
   try {
     const secret = process.env.SECRET;
@@ -130,6 +133,33 @@ userRouter.post("/signin", async (req, res) => {
     });
 
     return res.status(200).json({ tocken, user: user });
+  } catch (error) {
+    console.log(error); //console
+    return res.status(404).json({
+      error: error.message,
+    });
+  }
+});
+
+userRouter.post("/follow", async (req, res) => {
+  try {
+    const secret = process.env.SECRET;
+    const { id } = jwt.verify(getTocken(req), secret);
+    console.log(id);
+    if (!id) {
+      return res.status(400).json({
+        error: "envalid tocken",
+      });
+    }
+    const body = req.body;
+    const follower = await User.findById(body.id);
+    const user = await User.findById(id);
+    user = user.following.concat(follower._id);
+    follower = user.followers.concat(user._id);
+    await user.save();
+    await follower.save();
+
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error); //console
     return res.status(404).json({

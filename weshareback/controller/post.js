@@ -5,6 +5,15 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
+const getUserTocken = (req) => {
+  let authorization = req.get("Authorization");
+  if (authorization && authorization.startsWith("Bearer")) {
+    return authorization.replace("Bearer", "").trim();
+  } else {
+    return null;
+  }
+};
+
 postRouter.get("/", async (req, res) => {
   try {
     const posts = await Post.find({}).populate({
@@ -47,15 +56,6 @@ postRouter.get("/:id", async (req, res) => {
 postRouter.post("/", async (req, res) => {
   // console.log(req.body, req.headers);
 
-  const getUserTocken = (req) => {
-    const authorization = req.get("Authorization");
-
-    if (authorization && authorization.startsWith("Bearer")) {
-      return authorization.replace("Bearer", "").trim();
-    } else {
-      return null;
-    }
-  };
   try {
     const { location, desc, catagories } = req.body;
     console.log(req.body); //console
@@ -119,14 +119,6 @@ postRouter.put("/:id", async (req, res) => {
 });
 
 postRouter.put("/like/:id", async (req, res) => {
-  const getUserTocken = (req) => {
-    const authorization = req.get("Authorization");
-    if (authorization && authorization.startsWith("Bearer")) {
-      return authorization.replace("Bearer", "").trim();
-    } else {
-      return null;
-    }
-  };
   try {
     const postId = req.params.id;
     const secret = process.env.SECRET;
@@ -172,14 +164,6 @@ postRouter.put("/like/:id", async (req, res) => {
 });
 
 postRouter.put("/comment/:id", async (req, res) => {
-  const getUserTocken = (req) => {
-    const authorization = req.get("Authorization");
-    if (authorization && authorization.startsWith("Bearer")) {
-      return authorization.replace("Bearer", "").trim();
-    } else {
-      return null;
-    }
-  };
   try {
     const postId = req.params.id;
     const secret = process.env.SECRET;

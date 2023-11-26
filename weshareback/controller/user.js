@@ -183,11 +183,11 @@ userRouter.put("/follow", async (req, res) => {
     let updatedUserFollowing = null;
     if (userFollowing) {
       updatedUserFollowing = {
-        following: req.body.following.filter((id) => id !== userFollowing),
+        following: user.following.filter((id) => id !== userFollowing),
       };
     } else {
       updatedUserFollowing = {
-        following: req.body.following.concat(result._id),
+        following: user.following.concat(result._id),
       };
     }
 

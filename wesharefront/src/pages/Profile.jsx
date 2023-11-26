@@ -33,7 +33,7 @@ const Profile = () => {
   };
   useEffect(() => {
     profileHandler();
-  }, [postsData]);
+  }, []);
   return (
     <div className="profile-page">
       <div className="profile-name">

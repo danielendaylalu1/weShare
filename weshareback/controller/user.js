@@ -141,27 +141,50 @@ userRouter.post("/signin", async (req, res) => {
   }
 });
 
-userRouter.post("/follow", async (req, res) => {
+userRouter.put("/follow", async (req, res) => {
   try {
+    const followedUserId = req.body.id;
     const secret = process.env.SECRET;
-    const { id } = jwt.verify(getTocken(req), secret);
-    console.log(id);
-    if (!id) {
+    const { id: currentUserId } = jwt.verify(getTocken(req), secret);
+    console.log(currentUserId);
+
+    if (!currentUserId) {
       return res.status(400).json({
-        error: "envalid tocken",
+        error: "Invalid token",
       });
     }
-    const body = req.body;
-    const follower = await User.findById(body.id);
-    const user = await User.findById(id);
-    user = user.following.concat(follower._id);
-    follower = user.followers.concat(user._id);
-    await user.save();
-    await follower.save();
 
-    return res.status(200).json(user);
+    const currentUser = await User.findById(currentUserId);
+    const isAlreadyFollowing = currentUser.following.includes(followedUserId);
+
+    if (isAlreadyFollowing) {
+      currentUser.following = currentUser.following.filter(
+        (id) => id !== followedUserId
+      );
+    } else {
+      currentUser.following.push(followedUserId);
+    }
+
+    const updatedCurrentUser = await currentUser.save();
+
+    const followedUser = await User.findById(followedUserId);
+    const isAlreadyFollowed = followedUser.followers.includes(currentUserId);
+
+    if (isAlreadyFollowed) {
+      followedUser.followers = followedUser.followers.filter(
+        (id) => id !== currentUserId
+      );
+    } else {
+      followedUser.followers.push(currentUserId);
+    }
+
+    const updatedFollowedUser = await followedUser.save();
+
+    console.log(updatedCurrentUser);
+
+    return res.status(200).json(updatedFollowedUser);
   } catch (error) {
-    console.log(error); //console
+    console.log(error);
     return res.status(404).json({
       error: error.message,
     });
@@ -169,3 +192,74 @@ userRouter.post("/follow", async (req, res) => {
 });
 
 module.exports = userRouter;
+
+// userRouter.put("/follow", async (req, res) => {
+//   try {
+//     const userFollowedId = req.body.id;
+//     const secret = process.env.SECRET;
+//     const { id } = jwt.verify(getTocken(req), secret);
+//     console.log(id);
+//     if (!id) {
+//       return res.status(400).json({
+//         error: "envalid tocken",
+//       });
+//     }
+
+//     const user = await User.findById(id);
+
+//     const userFollowed = req.body.followers.find((id) => {
+//       return JSON.stringify(id) === JSON.stringify(user._id);
+//     });
+//     let updatedUser = null;
+//     if (userFollowed) {
+//       updatedUser = {
+//         followers: req.body.followers.filter(
+//           (follow) => follow !== userFollowed
+//         ),
+//       };
+//     } else {
+//       updatedUser = {
+//         followers: req.body.followers.concat(user._id),
+//       };
+//     }
+
+//     const result = await User.findByIdAndUpdate(userFollowedId, updatedUser, {
+//       new: true,
+//       runValidators: true,
+//       context: "query",
+//     }).populate("posts");
+
+//     const userFollowing = user.following.find((id) => {
+//       return JSON.stringify(id) === JSON.stringify(userFollowedId);
+//     });
+//     let updatedUserFollowing = null;
+//     if (userFollowing) {
+//       updatedUserFollowing = {
+//         following: req.body.following.filter((id) => id !== userFollowing),
+//       };
+//     } else {
+//       updatedUserFollowing = {
+//         following: req.body.following.concat(result._id),
+//       };
+//     }
+
+//     const userFollowingResult = await User.findByIdAndUpdate(
+//       id,
+//       updatedUserFollowing,
+//       {
+//         new: true,
+//         runValidators: true,
+//         context: "query",
+//       }
+//     ).populate("posts");
+
+//     console.log(userFollowingResult);
+
+//     return res.status(200).json(result);
+//   } catch (error) {
+//     console.log(error); //console
+//     return res.status(404).json({
+//       error: error.message,
+//     });
+//   }
+// });

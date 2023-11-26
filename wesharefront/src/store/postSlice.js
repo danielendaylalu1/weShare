@@ -7,6 +7,7 @@ import {
   likePost,
 } from "../services/postservices";
 import { setError, setLoading } from "./uiSlice";
+import { followUser } from "../services/userservices";
 
 const postSlice = createSlice({
   name: "post",
@@ -23,6 +24,14 @@ const postSlice = createSlice({
 
       return (state = state.map((post) =>
         post.id === updatedPost.id ? updatedPost : post
+      ));
+    },
+    updateUserPost(state, action) {
+      const updatedUserPost = action.payload;
+      return (state = state.map((post) =>
+        post.user.id === updatedUserPost.id
+          ? { ...post, user: updatedUserPost }
+          : post
       ));
     },
   },
@@ -73,5 +82,13 @@ export const handleComment = (id, data) => {
   };
 };
 
-export const { initializePosts, updatePost, createNewPost } = postSlice.actions;
+export const handleFollow = (data) => {
+  return async (dispatch) => {
+    const updatedPost = await followUser(data);
+    dispatch(updateUserPost(updatedPost));
+  };
+};
+
+export const { initializePosts, updatePost, createNewPost, updateUserPost } =
+  postSlice.actions;
 export default postSlice.reducer;

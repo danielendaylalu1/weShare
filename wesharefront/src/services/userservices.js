@@ -38,3 +38,14 @@ export const signUser = async (data) => {
   console.log(result.data);
   return result.data;
 };
+
+export const followUser = async (data) => {
+  const config = {
+    headers: {
+      Authorization: tocken,
+    },
+  };
+  const result = await axios.put(`${BASE_URI}/follow`, data, config);
+  console.log(result.data);
+  return result.data;
+};

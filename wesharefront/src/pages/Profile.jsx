@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import "./profile.css";
 import { getProfile } from "../services/userservices";
 import Posts from "../components/Posts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logOutUser } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const postsData = useSelector((state) => state.post);
 
   const [current, setCurrent] = useState("post");
 

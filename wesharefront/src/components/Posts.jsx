@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { handleComment, handleLike } from "../store/postSlice";
+import { handleComment, handleFollow, handleLike } from "../store/postSlice";
 import "./posts.css";
 
 const Posts = ({ posts }) => {
@@ -17,9 +17,29 @@ const Posts = ({ posts }) => {
       {posts.map((post) => {
         return (
           <div key={post.id} className="post">
-            <div className="post-user-profile">
-              <Link className="user-profile-img">{post.user.name[0]}</Link>
-              <Link>{post.user.name}</Link>
+            <div className="post-user">
+              <div className="post-user-profile">
+                <Link className="user-profile-img">{post.user.name[0]}</Link>
+                <Link>{post.user.name}</Link>
+              </div>
+              {post.user.id !== user.id && (
+                <div
+                  className="post-user-follow"
+                  onClick={() => {
+                    console.log("hi");
+                    dispatch(handleFollow(post.user));
+                  }}
+                >
+                  {post.user.followers.includes(user.id) ? (
+                    <p>unfollow</p>
+                  ) : (
+                    <>
+                      <p>follow</p>
+                      <FontAwesomeIcon icon={faAdd} className="icon" />
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <h2 className="post-desc">{post.desc}</h2>
             <h3 className="post-location">

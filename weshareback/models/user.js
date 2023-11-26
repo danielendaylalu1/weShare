@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: [true, "Please insert your phonenumber"],
+    unique: true,
     validate: {
       validator: function (v) {
         return /^09\d{8}$/.test(v);

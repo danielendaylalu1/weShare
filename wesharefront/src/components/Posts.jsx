@@ -22,23 +22,36 @@ const Posts = ({ posts }) => {
                 <Link className="user-profile-img">{post.user.name[0]}</Link>
                 <Link>{post.user.name}</Link>
               </div>
-              {post.user.id !== user.id && (
+              {!user ? (
                 <div
                   className="post-user-follow"
                   onClick={() => {
                     console.log("hi");
-                    dispatch(handleFollow(post.user));
+                    navigate("/signin");
                   }}
                 >
-                  {post.user.followers.includes(user.id) ? (
-                    <p>unfollow</p>
-                  ) : (
-                    <>
-                      <p>follow</p>
-                      <FontAwesomeIcon icon={faAdd} className="icon" />
-                    </>
-                  )}
+                  <p>follow</p>
+                  <FontAwesomeIcon icon={faAdd} className="icon" />
                 </div>
+              ) : (
+                post.user.id !== user.id && (
+                  <div
+                    className="post-user-follow"
+                    onClick={() => {
+                      console.log("hi");
+                      dispatch(handleFollow(post.user));
+                    }}
+                  >
+                    {post.user.followers.includes(user.id) ? (
+                      <p>unfollow</p>
+                    ) : (
+                      <>
+                        <p>follow</p>
+                        <FontAwesomeIcon icon={faAdd} className="icon" />
+                      </>
+                    )}
+                  </div>
+                )
               )}
             </div>
             <h2 className="post-desc">{post.desc}</h2>

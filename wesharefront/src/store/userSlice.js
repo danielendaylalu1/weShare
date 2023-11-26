@@ -25,7 +25,7 @@ export const SignInUser = (data) => {
       const userToStore = {
         tocken: user.tocken,
         id: user.user.id,
-        name: user.user.username,
+        name: user.user.name,
       };
       window.localStorage.setItem("user", JSON.stringify(userToStore));
       const userData = window.localStorage.getItem("user");

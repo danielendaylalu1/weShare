@@ -18,7 +18,7 @@ const Navbar = () => {
     { header: "Post", icon: faCirclePlus, link: "/post" },
     { header: "Followers", icon: faUsers, link: "/followers" },
   ];
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(useSelector((state) => state.user));
 
   const navigate = useNavigate();
 
@@ -40,7 +40,8 @@ const Navbar = () => {
       {user ? (
         <div className="profile-navigation">
           <h3>
-            <Link to="/profile">D</Link>
+            {console.log(user)}
+            <Link to="/profile">{user.name[0]}</Link>
           </h3>
           <p
             className="profile-logout"

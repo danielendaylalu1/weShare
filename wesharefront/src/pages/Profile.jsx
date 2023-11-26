@@ -91,7 +91,7 @@ const Profile = () => {
           user.posts.length === 0 ? (
             <div>no post posted yet</div>
           ) : (
-            <Posts posts={user.posts} />
+            <Posts posts={user.posts.reverse()} />
           )
         ) : current === "following" ? (
           <div>{current}</div>

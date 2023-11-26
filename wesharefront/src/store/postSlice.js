@@ -13,7 +13,7 @@ const postSlice = createSlice({
   initialState: [],
   reducers: {
     initializePosts(state, action) {
-      return (state = action.payload);
+      return (state = action.payload.reverse());
     },
     createNewPost(state, action) {
       return (state = state.concat(action.payload));
@@ -39,7 +39,11 @@ export const fetchPosts = () => {
     } catch (error) {
       console.log(error, "here");
       dispatch(setLoading(null));
-      dispatch(setError(error.message));
+      if (error.response) {
+        dispatch(setError(error.response.data.message));
+      } else {
+        dispatch(setError(error.message));
+      }
     }
   };
 };

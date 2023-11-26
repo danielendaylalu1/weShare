@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Please insert fullname"],
+  },
   username: {
     type: String,
     required: [true, "Please insert username"],
     minLength: 4,
     unique: true,
-  },
-  name: {
-    type: String,
-    required: [true, "Please insert fullname"],
   },
   passwordHash: {
     type: String,

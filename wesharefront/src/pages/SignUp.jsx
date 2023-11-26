@@ -69,7 +69,7 @@ const SignUp = () => {
             <input
               type="text"
               placeholder="full name"
-              value={user.fullname}
+              value={user.name}
               onChange={(e) => {
                 setUser((prv) => ({ ...prv, name: e.target.value }));
               }}

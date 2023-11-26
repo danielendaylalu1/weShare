@@ -143,48 +143,69 @@ userRouter.post("/signin", async (req, res) => {
 
 userRouter.put("/follow", async (req, res) => {
   try {
-    const followedUserId = req.body.id;
+    const userFollowedId = req.body.id;
     const secret = process.env.SECRET;
-    const { id: currentUserId } = jwt.verify(getTocken(req), secret);
-    console.log(currentUserId);
-
-    if (!currentUserId) {
+    const { id } = jwt.verify(getTocken(req), secret);
+    console.log(id);
+    if (!id) {
       return res.status(400).json({
-        error: "Invalid token",
+        error: "envalid tocken",
       });
     }
 
-    const currentUser = await User.findById(currentUserId);
-    const isAlreadyFollowing = currentUser.following.includes(followedUserId);
+    const user = await User.findById(id);
 
-    if (isAlreadyFollowing) {
-      currentUser.following = currentUser.following.filter(
-        (id) => id !== followedUserId
-      );
+    const userFollowed = req.body.followers.find((id) => {
+      return JSON.stringify(id) === JSON.stringify(user._id);
+    });
+    let updatedUser = null;
+    if (userFollowed) {
+      updatedUser = {
+        followers: req.body.followers.filter(
+          (follow) => follow !== userFollowed
+        ),
+      };
     } else {
-      currentUser.following.push(followedUserId);
+      updatedUser = {
+        followers: req.body.followers.concat(user._id),
+      };
     }
 
-    const updatedCurrentUser = await currentUser.save();
+    const result = await User.findByIdAndUpdate(userFollowedId, updatedUser, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    }).populate("posts");
 
-    const followedUser = await User.findById(followedUserId);
-    const isAlreadyFollowed = followedUser.followers.includes(currentUserId);
-
-    if (isAlreadyFollowed) {
-      followedUser.followers = followedUser.followers.filter(
-        (id) => id !== currentUserId
-      );
+    const userFollowing = user.following.find((id) => {
+      return JSON.stringify(id) === JSON.stringify(userFollowedId);
+    });
+    let updatedUserFollowing = null;
+    if (userFollowing) {
+      updatedUserFollowing = {
+        following: req.body.following.filter((id) => id !== userFollowing),
+      };
     } else {
-      followedUser.followers.push(currentUserId);
+      updatedUserFollowing = {
+        following: req.body.following.concat(result._id),
+      };
     }
 
-    const updatedFollowedUser = await followedUser.save();
+    const userFollowingResult = await User.findByIdAndUpdate(
+      id,
+      updatedUserFollowing,
+      {
+        new: true,
+        runValidators: true,
+        context: "query",
+      }
+    ).populate("posts");
 
-    console.log(updatedCurrentUser);
+    console.log(userFollowingResult);
 
-    return res.status(200).json(updatedFollowedUser);
+    return res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.log(error); //console
     return res.status(404).json({
       error: error.message,
     });
@@ -195,69 +216,48 @@ module.exports = userRouter;
 
 // userRouter.put("/follow", async (req, res) => {
 //   try {
-//     const userFollowedId = req.body.id;
+//     const followedUserId = req.body.id;
 //     const secret = process.env.SECRET;
-//     const { id } = jwt.verify(getTocken(req), secret);
-//     console.log(id);
-//     if (!id) {
+//     const { id: currentUserId } = jwt.verify(getTocken(req), secret);
+//     console.log(currentUserId);
+
+//     if (!currentUserId) {
 //       return res.status(400).json({
-//         error: "envalid tocken",
+//         error: "Invalid token",
 //       });
 //     }
 
-//     const user = await User.findById(id);
+//     const currentUser = await User.findById(currentUserId);
+//     const isAlreadyFollowing = currentUser.following.includes(followedUserId);
 
-//     const userFollowed = req.body.followers.find((id) => {
-//       return JSON.stringify(id) === JSON.stringify(user._id);
-//     });
-//     let updatedUser = null;
-//     if (userFollowed) {
-//       updatedUser = {
-//         followers: req.body.followers.filter(
-//           (follow) => follow !== userFollowed
-//         ),
-//       };
+//     if (isAlreadyFollowing) {
+//       currentUser.following = currentUser.following.filter(
+//         (id) => id !== followedUserId
+//       );
 //     } else {
-//       updatedUser = {
-//         followers: req.body.followers.concat(user._id),
-//       };
+//       currentUser.following = currentUser.following.concat(followedUserId);
 //     }
 
-//     const result = await User.findByIdAndUpdate(userFollowedId, updatedUser, {
-//       new: true,
-//       runValidators: true,
-//       context: "query",
-//     }).populate("posts");
+//     const updatedCurrentUser = await currentUser.save();
 
-//     const userFollowing = user.following.find((id) => {
-//       return JSON.stringify(id) === JSON.stringify(userFollowedId);
-//     });
-//     let updatedUserFollowing = null;
-//     if (userFollowing) {
-//       updatedUserFollowing = {
-//         following: req.body.following.filter((id) => id !== userFollowing),
-//       };
+//     const followedUser = await User.findById(followedUserId);
+//     const isAlreadyFollowed = followedUser.followers.includes(currentUserId);
+
+//     if (isAlreadyFollowed) {
+//       followedUser.followers = followedUser.followers.filter(
+//         (id) => id !== currentUserId
+//       );
 //     } else {
-//       updatedUserFollowing = {
-//         following: req.body.following.concat(result._id),
-//       };
+//       followedUser.followers = followedUser.followers.concat(currentUserId);
 //     }
 
-//     const userFollowingResult = await User.findByIdAndUpdate(
-//       id,
-//       updatedUserFollowing,
-//       {
-//         new: true,
-//         runValidators: true,
-//         context: "query",
-//       }
-//     ).populate("posts");
+//     const updatedFollowedUser = (await followedUser.save()).populate("posts");
 
-//     console.log(userFollowingResult);
+//     console.log(updatedCurrentUser);
 
-//     return res.status(200).json(result);
+//     return res.status(200).json(updatedFollowedUser);
 //   } catch (error) {
-//     console.log(error); //console
+//     console.log(error);
 //     return res.status(404).json({
 //       error: error.message,
 //     });

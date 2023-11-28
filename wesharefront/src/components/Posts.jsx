@@ -59,9 +59,9 @@ const Posts = ({ posts }) => {
               <FontAwesomeIcon icon={faLocationDot} className="location-icon" />
               {post.location}
             </h3>
-            <div className="post-img-box">
-              {post.image && <img alt="image" src={post.image} />}
-            </div>
+
+            {post.image && <img alt="image" src={post.image} />}
+
             <div className="post-catagories">
               {post.catagories.map((catag, index) => {
                 return (

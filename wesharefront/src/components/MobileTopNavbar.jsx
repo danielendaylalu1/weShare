@@ -10,7 +10,7 @@ const MobileTopNavbar = () => {
       {user ? (
         <div className="mobile-top-nav">
           <Link to="/">Weshare</Link>
-          <Link to="/profile">D</Link>
+          <Link to="/profile">{user.name[0]}</Link>
         </div>
       ) : (
         <div className="mobile-top-nav">

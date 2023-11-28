@@ -4,11 +4,12 @@ import "./mobileTopNavbar.css";
 import { useSelector } from "react-redux";
 
 const MobileTopNavbar = () => {
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(useSelector((state) => state.user));
   return (
     <>
       {user ? (
         <div className="mobile-top-nav">
+          {console.log(user)}
           <Link to="/">Weshare</Link>
           <Link to="/profile">{user.name[0]}</Link>
         </div>

@@ -59,9 +59,9 @@ export const fetchPosts = () => {
   };
 };
 
-export const handleCreatePost = (data) => {
+export const handleCreatePost = (data, file) => {
   return async (dispatch) => {
-    const post = await createPost(data);
+    const post = await createPost(data, file);
     console.log(post);
     dispatch(createNewPost(post));
   };

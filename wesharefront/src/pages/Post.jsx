@@ -12,6 +12,7 @@ const Post = () => {
     desc: "",
     catagories: [],
   });
+  const [file, setFile] = useState(null);
 
   const [catagory, setCatagory] = useState("");
 
@@ -23,7 +24,7 @@ const Post = () => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          dispatch(handleCreatePost(post));
+          dispatch(handleCreatePost(post, file));
           setPost({
             location: "",
             desc: "",
@@ -56,6 +57,15 @@ const Post = () => {
                 setPost((prv) => ({ ...prv, desc: desc }));
               }}
             ></textarea>
+          </div>
+          <div>
+            <label>File</label>
+            <input
+              type="file"
+              // value={file}
+              style={{ cursor: "pointer" }}
+              onChange={(e) => setFile(e.target.files[0])}
+            />
           </div>
           <div>
             <label>Catagory</label>

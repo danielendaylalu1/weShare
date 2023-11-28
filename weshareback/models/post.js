@@ -37,18 +37,10 @@ const postShema = new mongoose.Schema({
     ],
     default: [],
   },
-  rating: {
-    type: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        value: { type: Number, required: true },
-      },
-    ],
-    default: [],
+
+  image: {
+    type: String,
+    required: [false, "image field is required"],
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

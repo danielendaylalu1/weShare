@@ -20,13 +20,23 @@ export const getPost = async (id) => {
   console.log(result.data); //console
 };
 
-export const createPost = async (data) => {
+export const createPost = async (data, file) => {
+  const formData = new FormData();
+  formData.append("location", data.location);
+  formData.append("desc", data.desc);
+  formData.append("catagories", data.catagories);
+  formData.append("file", file);
+
+  console.log(formData);
+
   const config = {
-    headers: { Authorization: tocken },
+    headers: {
+      Authorization: tocken,
+      "Content-Type": "multipart/form-data", // Add this line
+    },
   };
-  console.log(config);
-  const result = await axios.post(`${BASE_URI}`, data, config);
-  console.log(result.data); //console
+
+  const result = await axios.post(`${BASE_URI}`, formData, config); // Send the form data instead of the data object
   return result.data;
 };
 

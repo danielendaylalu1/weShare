@@ -4,6 +4,19 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const { v4: uuidv4 } = require("uuid");
+const path = require("path");
+
+const axios = require("axios");
+const fs = require("fs");
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 1024 * 1024 * 1,
+  },
+});
 
 const getUserTocken = (req) => {
   let authorization = req.get("Authorization");
@@ -53,12 +66,69 @@ postRouter.get("/:id", async (req, res) => {
   }
 });
 
-postRouter.post("/", async (req, res) => {
-  // console.log(req.body, req.headers);
+// postRouter.post("/", upload.single("file"), async (req, res) => {
+//   console.log(req.file);
+//   if (req.fileValidationError) {
+//     return res.status(400).send(req.fileValidationError);
+//   }
+
+//   try {
+//     const { location, desc, catagories } = req.body;
+
+//     const decodedTocken = jwt.verify(getUserTocken(req), process.env.SECRET);
+//     if (!decodedTocken.id) {
+//       return res.status(401).json({
+//         error: "invalid tocken",
+//       });
+//     }
+
+//     const user = await User.findById(decodedTocken.id);
+
+//     const filePath = `post/${new Date().toString() + "imagepost"}`;
+//     const fileBuffer = req.file.buffer;
+//     const url = `https://storage.bunnycdn.com/weshare/${filePath}`;
+
+//     await axios.put(url, fileBuffer, {
+//       headers: {
+//         AccessKey: process.env.CDN_API_KEY,
+//         "Content-Type": req.file.mimetype,
+//       },
+//     });
+
+//     const newPost = new Post({
+//       location,
+//       desc,
+//       catagories,
+//       image: `https://weshare.b-cdn.net/${filePath}`, // URL of the uploaded file
+//       user: new mongoose.Types.ObjectId(user.id),
+//     });
+//     const post = await newPost.save();
+//     const populatedPost = await Post.findById(post._id).populate("user");
+//     console.log(post); //console
+
+//     console.log(user); //console
+
+//     user.posts = user.posts.concat(post.id);
+
+//     await user.save();
+
+//     return res.status(201).json(populatedPost);
+//   } catch (error) {
+//     console.log(error); //console
+
+//     return res.status(404).json({
+//       error: error.message,
+//     });
+//   }
+// });
+postRouter.post("/", upload.single("file"), async (req, res) => {
+  console.log(req.file);
+  if (req.fileValidationError) {
+    return res.status(400).send(req.fileValidationError);
+  }
 
   try {
     const { location, desc, catagories } = req.body;
-    console.log(req.body); //console
 
     const decodedTocken = jwt.verify(getUserTocken(req), process.env.SECRET);
     if (!decodedTocken.id) {
@@ -69,10 +139,29 @@ postRouter.post("/", async (req, res) => {
 
     const user = await User.findById(decodedTocken.id);
 
+    const REGION = "";
+    const BASE_HOSTNAME = "storage.bunnycdn.com";
+    const HOSTNAME = REGION ? `${REGION}.${BASE_HOSTNAME}` : BASE_HOSTNAME;
+    const STORAGE_ZONE_NAME = "weshare";
+    const extension = path.extname(req.file.originalname);
+    const FILENAME_TO_UPLOAD = `${uuidv4() + "post" + extension}`;
+    const ACCESS_KEY = process.env.CDN_API_KEY;
+
+    const fileBuffer = req.file.buffer;
+    const url = `https://${HOSTNAME}/${STORAGE_ZONE_NAME}/post/${FILENAME_TO_UPLOAD}`;
+
+    await axios.put(url, fileBuffer, {
+      headers: {
+        AccessKey: ACCESS_KEY,
+        "Content-Type": req.file.mimetype,
+      },
+    });
+
     const newPost = new Post({
       location,
       desc,
       catagories,
+      image: `https://weshare.b-cdn.net/${STORAGE_ZONE_NAME}/post/${FILENAME_TO_UPLOAD}`, // URL of the uploaded file
       user: new mongoose.Types.ObjectId(user.id),
     });
     const post = await newPost.save();

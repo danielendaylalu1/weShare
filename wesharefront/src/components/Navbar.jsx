@@ -34,7 +34,8 @@ const Navbar = () => {
         {navItems.map((item) => {
           return (
             <Link to={item.link} key={item.header}>
-              <FontAwesomeIcon icon={item.icon} /> <span>{item.header}</span>
+              <FontAwesomeIcon icon={item.icon} className="nav-link-icons" />{" "}
+              <span>{item.header}</span>
             </Link>
           );
         })}

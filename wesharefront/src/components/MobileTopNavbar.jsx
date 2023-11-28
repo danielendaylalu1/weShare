@@ -15,7 +15,9 @@ const MobileTopNavbar = () => {
         </div>
       ) : (
         <div className="mobile-top-nav">
-          <Link to="/">Weshare</Link>
+          <Link to="/" className="mobile-nav-logo">
+            Weshare
+          </Link>
           <div className="sign-links">
             <Link to="/signin">signin</Link>/<Link to="/signup">signup</Link>
           </div>

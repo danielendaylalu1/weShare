@@ -11,7 +11,6 @@ const Profile = () => {
   const [current, setCurrent] = useState("post");
 
   const likes = user && user.posts.map((post) => post.likes.length);
-  console.log(likes);
   const totalLikes = likes && likes.reduce((a, b) => a + b, 0);
   const dispatch = useDispatch();
 

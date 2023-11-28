@@ -26,7 +26,9 @@ const Navbar = () => {
   return (
     <div className="navbar navbar-mobile">
       <div className="logo">
-        <h2>WeShare</h2>
+        <h2>
+          <Link to="/">WeShare</Link>
+        </h2>
       </div>
       <div className="nav">
         {navItems.map((item) => {

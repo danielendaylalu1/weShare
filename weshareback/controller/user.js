@@ -129,7 +129,7 @@ userRouter.post("/signin", async (req, res) => {
     const secret = process.env.SECRET;
     console.log(secret);
     const tocken = jwt.sign(forTocken, secret, {
-      expiresIn: 160 * 160,
+      expiresIn: 10 * 10,
     });
 
     return res.status(200).json({ tocken, user: user });

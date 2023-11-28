@@ -66,61 +66,6 @@ postRouter.get("/:id", async (req, res) => {
   }
 });
 
-// postRouter.post("/", upload.single("file"), async (req, res) => {
-//   console.log(req.file);
-//   if (req.fileValidationError) {
-//     return res.status(400).send(req.fileValidationError);
-//   }
-
-//   try {
-//     const { location, desc, catagories } = req.body;
-
-//     const decodedTocken = jwt.verify(getUserTocken(req), process.env.SECRET);
-//     if (!decodedTocken.id) {
-//       return res.status(401).json({
-//         error: "invalid tocken",
-//       });
-//     }
-
-//     const user = await User.findById(decodedTocken.id);
-
-//     const filePath = `post/${new Date().toString() + "imagepost"}`;
-//     const fileBuffer = req.file.buffer;
-//     const url = `https://storage.bunnycdn.com/weshare/${filePath}`;
-
-//     await axios.put(url, fileBuffer, {
-//       headers: {
-//         AccessKey: process.env.CDN_API_KEY,
-//         "Content-Type": req.file.mimetype,
-//       },
-//     });
-
-//     const newPost = new Post({
-//       location,
-//       desc,
-//       catagories,
-//       image: `https://weshare.b-cdn.net/${filePath}`, // URL of the uploaded file
-//       user: new mongoose.Types.ObjectId(user.id),
-//     });
-//     const post = await newPost.save();
-//     const populatedPost = await Post.findById(post._id).populate("user");
-//     console.log(post); //console
-
-//     console.log(user); //console
-
-//     user.posts = user.posts.concat(post.id);
-
-//     await user.save();
-
-//     return res.status(201).json(populatedPost);
-//   } catch (error) {
-//     console.log(error); //console
-
-//     return res.status(404).json({
-//       error: error.message,
-//     });
-//   }
-// });
 postRouter.post("/", upload.single("file"), async (req, res) => {
   console.log(req.file);
   if (req.fileValidationError) {
@@ -161,7 +106,7 @@ postRouter.post("/", upload.single("file"), async (req, res) => {
       location,
       desc,
       catagories,
-      image: `https://weshare.b-cdn.net/${STORAGE_ZONE_NAME}/post/${FILENAME_TO_UPLOAD}`, // URL of the uploaded file
+      image: `https://weshare.b-cdn.net/post/${FILENAME_TO_UPLOAD}`, // URL of the uploaded file
       user: new mongoose.Types.ObjectId(user.id),
     });
     const post = await newPost.save();

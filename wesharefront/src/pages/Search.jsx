@@ -17,9 +17,13 @@ const Search = () => {
             if (posts) {
               const result = posts.filter(
                 (post) =>
-                  post.desc.includes(e.target.query.value) ||
-                  post.location.includes(e.target.query.value) ||
-                  post.catagories.includes(e.target.query.value)
+                  post.desc
+                    .toLowerCase()
+                    .includes(e.target.query.value.toLowerCase()) ||
+                  post.location
+                    .toLowerCase()
+                    .includes(e.target.query.value.toLowerCase()) ||
+                  post.catagories.includes(e.target.query.value.toLowerCase())
               );
               setSearchedPost(result);
             }
@@ -32,7 +36,13 @@ const Search = () => {
         </form>
       </div>
       <div className="search-result">
-        {searchedPost && <Posts posts={searchedPost} />}
+        {searchedPost ? (
+          searchedPost.length > 0 ? (
+            <Posts posts={searchedPost} />
+          ) : (
+            <p>no result found</p>
+          )
+        ) : null}
       </div>
     </div>
   );

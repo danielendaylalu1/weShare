@@ -81,7 +81,7 @@ const Post = () => {
                 value={catagory}
                 onChange={(e) => {
                   const catagory = e.target.value;
-                  setCatagory(catagory);
+                  setCatagory(catagory.toLowerCase());
                 }}
               />
               <button

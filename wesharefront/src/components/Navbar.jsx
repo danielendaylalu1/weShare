@@ -43,7 +43,7 @@ const Navbar = () => {
         <div className="profile-navigation">
           <h3>
             {console.log(user)}
-            <Link to="/profile">{user.name[0]}</Link>
+            <Link to="/profile">{user.name && user.name[0]}</Link>
           </h3>
           <p
             className="profile-logout"

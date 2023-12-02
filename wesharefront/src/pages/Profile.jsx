@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./profile.css";
 import { getProfile } from "../services/userservices";
 import { useDispatch } from "react-redux";
 import { logOutUser } from "../store/userSlice";
@@ -27,7 +26,7 @@ const Profile = () => {
   useEffect(() => {
     profileHandler();
   }, []);
-  return <ProfilePage user={user} />;
+  return <ProfilePage user={user} isSelf={true} />;
 };
 
 export default Profile;

@@ -23,7 +23,7 @@ const User = () => {
     handelUser(id);
     // setUser(post.user);
   }, []);
-  return <ProfilePage user={user} />;
+  return <ProfilePage user={user} isSelf={false} />;
 };
 
 export default User;

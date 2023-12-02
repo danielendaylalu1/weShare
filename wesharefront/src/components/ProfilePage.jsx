@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import "../pages/profile.css";
+import "./profile.css";
 import Posts from "../components/Posts";
 import { useDispatch } from "react-redux";
 import { logOutUser } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 
-const ProfilePage = ({ user }) => {
+const ProfilePage = ({ user, isSelf }) => {
   const [current, setCurrent] = useState("post");
   const likes = user && user.posts.map((post) => post.likes.length);
   const totalLikes = likes && likes.reduce((a, b) => a + b, 0);
@@ -29,15 +29,17 @@ const ProfilePage = ({ user }) => {
           <p>{user && user.username}</p>
         </div>
         <p>total likes {user && totalLikes}</p>
-        <p
-          className="profile-logout-mobile"
-          onClick={() => {
-            dispatch(logOutUser(null));
-            navigate("/signin");
-          }}
-        >
-          logout
-        </p>
+        {isSelf && (
+          <p
+            className="profile-logout-mobile"
+            onClick={() => {
+              dispatch(logOutUser(null));
+              navigate("/signin");
+            }}
+          >
+            logout
+          </p>
+        )}
       </div>
       <div className="profile-nav">
         <p
@@ -70,7 +72,7 @@ const ProfilePage = ({ user }) => {
           user.posts.length === 0 ? (
             <div>no post posted yet</div>
           ) : (
-            <Posts posts={user.posts.reverse()} />
+            <Posts posts={user.posts.reverse()} route={false} />
           )
         ) : current === "following" ? (
           <div>{current}</div>

@@ -19,8 +19,10 @@ const Posts = ({ posts }) => {
           <div key={post.id} className="post">
             <div className="post-user">
               <div className="post-user-profile">
-                <Link className="user-profile-img">{post.user.name[0]}</Link>
-                <Link>{post.user.username}</Link>
+                <Link className="user-profile-img" to={`post/${post.id}`}>
+                  {post.user.name[0]}
+                </Link>
+                <Link to={`post/${post.id}`}>{post.user.username}</Link>
               </div>
               {!user ? (
                 <div

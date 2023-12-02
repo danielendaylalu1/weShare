@@ -14,6 +14,7 @@ import { setTocken } from "./services/postservices";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Post from "./pages/Post";
+import User from "./pages/User";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -34,6 +35,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<div>explore</div>} />
+          <Route path="/post/:id" element={<User />} />
           <Route path="/search" element={<Search />} />
           <Route
             path="/post"

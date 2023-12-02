@@ -53,7 +53,13 @@ postRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id); //console
 
-    const post = await Post.findById(id).populate("user");
+    const post = await Post.findById(id).populate({
+      path: "user",
+      populate: {
+        path: "posts",
+        model: "Post",
+      },
+    });
     console.log(post); //console
 
     return res.status(200).json(post);

@@ -18,6 +18,7 @@ export const getPosts = async () => {
 export const getPost = async (id) => {
   const result = await axios.get(`${BASE_URI}/${id}`);
   console.log(result.data); //console
+  return result.data;
 };
 
 export const createPost = async (data, file) => {

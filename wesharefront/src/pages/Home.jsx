@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      {console.log(loading, error)}
+      {/* {console.log(loading, error)} */}
       {loading === true ? (
         <p style={{ color: "white" }}>loading.....</p>
       ) : error ? (

@@ -2,25 +2,23 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import ProfilePage from "../components/ProfilePage";
-import { useSelector } from "react-redux";
+
 import { getUser } from "../services/userservices";
+import { getPost } from "../services/postservices";
 
 const User = () => {
   const [user, setUser] = useState(null);
-  const { id } = useParams();
-  const posts = useSelector((state) => state.post);
-  const post = posts.find((p) => p.id === id);
+  const params = useParams();
 
-  console.log("post", post);
   const handelUser = async (id) => {
-    const userData = await getUser(id);
-    console.log(userData);
+    const post = await getPost(id);
+    const userId = post.user.id;
+    const userData = await getUser(userId);
     setUser(userData);
   };
 
   useEffect(() => {
-    const id = post && post.user.id;
-    handelUser(id);
+    handelUser(params.id);
     // setUser(post.user);
   }, []);
   return <ProfilePage user={user} isSelf={false} />;

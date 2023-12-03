@@ -43,12 +43,12 @@ export const fetchPosts = () => {
       dispatch(setLoading(true));
       let posts = await getPosts();
       posts = posts.reverse();
-      console.log(posts);
+      // console.log(posts);
       dispatch(initializePosts(posts));
       dispatch(setLoading(null));
       dispatch(setError(null));
     } catch (error) {
-      console.log(error, "here");
+      // console.log(error, "here");
       dispatch(setLoading(null));
       if (error.response) {
         dispatch(setError("something went wrong"));
@@ -62,7 +62,7 @@ export const fetchPosts = () => {
 export const handleCreatePost = (data, file) => {
   return async (dispatch) => {
     const post = await createPost(data, file);
-    console.log(post);
+    // console.log(post);
     dispatch(createNewPost(post));
   };
 };
@@ -70,7 +70,7 @@ export const handleCreatePost = (data, file) => {
 export const handleLike = (id, data) => {
   return async (dispatch) => {
     const updatedPost = await likePost(id, data);
-    console.log(updatedPost);
+    // console.log(updatedPost);
     dispatch(updatePost(updatedPost));
   };
 };

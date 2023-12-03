@@ -33,7 +33,7 @@ export const SignInUser = (data) => {
       dispatch(initializeUser(userData));
       dispatch(setLoading(null));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch(setLoading(null));
       if (error.response) {
         dispatch(setError(error.response.data.message));

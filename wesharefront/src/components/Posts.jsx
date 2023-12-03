@@ -41,7 +41,7 @@ const Posts = ({ posts, route }) => {
                 <div
                   className="post-user-follow"
                   onClick={() => {
-                    console.log("hi");
+                    // console.log("hi");
                     navigate("/signin");
                   }}
                 >
@@ -53,7 +53,7 @@ const Posts = ({ posts, route }) => {
                   <div
                     className="post-user-follow"
                     onClick={() => {
-                      console.log("hi");
+                      // console.log("hi");
                       dispatch(handleFollow(post.user));
                     }}
                   >

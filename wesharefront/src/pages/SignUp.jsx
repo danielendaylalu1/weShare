@@ -29,7 +29,7 @@ const SignUp = () => {
         navigate("/signin");
       }, 2000);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       dispatch(setLoading(null));
       if (error.response) {
         dispatch(
@@ -53,7 +53,7 @@ const SignUp = () => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(user);
+          // console.log(user);
           createNewUser(user);
           setUser({
             name: "",

@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Post from "./pages/Post";
 import User from "./pages/User";
+import Following from "./pages/Following";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -42,13 +43,9 @@ const App = () => {
             element={user ? <Post /> : <Navigate to="/signin" replace={true} />}
           />
           <Route
-            path="/followers"
+            path="/following"
             element={
-              user ? (
-                <div>followers</div>
-              ) : (
-                <Navigate to="/signin" replace={true} />
-              )
+              user ? <Following /> : <Navigate to="/signin" replace={true} />
             }
           />
           <Route

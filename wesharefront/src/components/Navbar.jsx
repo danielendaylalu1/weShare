@@ -16,7 +16,7 @@ const Navbar = () => {
     { header: "Explore", icon: faCompass, link: "/explore" },
     { header: "Search", icon: faSearch, link: "/search" },
     { header: "Post", icon: faCirclePlus, link: "/post" },
-    { header: "Followers", icon: faUsers, link: "/followers" },
+    { header: "Following", icon: faUsers, link: "/following" },
   ];
   const user = JSON.parse(useSelector((state) => state.user));
 
@@ -43,7 +43,7 @@ const Navbar = () => {
       {user ? (
         <div className="profile-navigation">
           <h3>
-            {console.log(user)}
+            {/* {console.log(user)} */}
             <Link to="/profile">{user.name && user.name[0]}</Link>
           </h3>
           <p

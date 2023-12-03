@@ -29,6 +29,34 @@ userRouter.get("/", async (req, res) => {
   }
 });
 
+userRouter.get("/following", async (req, res) => {
+  try {
+    const secret = process.env.SECRET;
+    const { id } = jwt.verify(getTocken(req), secret);
+    console.log(id);
+    if (!id) {
+      return res.status(400).json({
+        error: "envalid tocken",
+      });
+    }
+
+    const user = await User.findById(id)
+      .populate("following")
+      .populate("followers");
+
+    // console.log(".........", user);
+    res
+      .status(200)
+      .json({ following: user.following, followers: user.followers });
+  } catch (error) {
+    console.log(error); //console
+
+    return res.status(404).json({
+      error: error.message,
+    });
+  }
+});
+
 userRouter.get("/profile", async (req, res) => {
   // console.log(req.get("Authorization"), req.headers);
 
@@ -219,53 +247,3 @@ userRouter.put("/follow", async (req, res) => {
 });
 
 module.exports = userRouter;
-
-// userRouter.put("/follow", async (req, res) => {
-//   try {
-//     const followedUserId = req.body.id;
-//     const secret = process.env.SECRET;
-//     const { id: currentUserId } = jwt.verify(getTocken(req), secret);
-//     console.log(currentUserId);
-
-//     if (!currentUserId) {
-//       return res.status(400).json({
-//         error: "Invalid token",
-//       });
-//     }
-
-//     const currentUser = await User.findById(currentUserId);
-//     const isAlreadyFollowing = currentUser.following.includes(followedUserId);
-
-//     if (isAlreadyFollowing) {
-//       currentUser.following = currentUser.following.filter(
-//         (id) => id !== followedUserId
-//       );
-//     } else {
-//       currentUser.following = currentUser.following.concat(followedUserId);
-//     }
-
-//     const updatedCurrentUser = await currentUser.save();
-
-//     const followedUser = await User.findById(followedUserId);
-//     const isAlreadyFollowed = followedUser.followers.includes(currentUserId);
-
-//     if (isAlreadyFollowed) {
-//       followedUser.followers = followedUser.followers.filter(
-//         (id) => id !== currentUserId
-//       );
-//     } else {
-//       followedUser.followers = followedUser.followers.concat(currentUserId);
-//     }
-
-//     const updatedFollowedUser = (await followedUser.save()).populate("posts");
-
-//     console.log(updatedCurrentUser);
-
-//     return res.status(200).json(updatedFollowedUser);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(404).json({
-//       error: error.message,
-//     });
-//   }
-// });

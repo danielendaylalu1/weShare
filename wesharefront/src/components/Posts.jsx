@@ -16,6 +16,7 @@ const Posts = ({ posts, route }) => {
   const location = useLocation();
   return (
     <div className="posts">
+      {console.log(posts)}
       {posts.map((post) => {
         return (
           <div key={post.id} className="post">

@@ -176,6 +176,7 @@ userRouter.post("/signin", async (req, res) => {
 });
 
 userRouter.put("/follow", async (req, res) => {
+  console.log(req.body);
   try {
     const userFollowedId = req.body.id;
     const secret = process.env.SECRET;

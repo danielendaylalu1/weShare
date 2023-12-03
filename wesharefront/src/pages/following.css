@@ -1,4 +1,6 @@
 .following-nav {
+  position: sticky;
+  top: 0px;
   padding: 20px 5px 5px;
   display: flex;
   justify-content: space-around;
@@ -12,4 +14,15 @@
 .following-nav .active {
   border-bottom: 2px solid cornflowerblue;
   padding-bottom: 4px;
+}
+.following-users {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.following-users-list {
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
 }

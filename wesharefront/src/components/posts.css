@@ -22,7 +22,7 @@
   display: flex;
   justify-content: space-between;
 }
-.post .post-user-profile {
+.post-user-profile {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -37,7 +37,7 @@
   text-align: center;
   border-radius: 100%;
 }
-.post-user .post-user-follow {
+.post-user-follow {
   padding: 0 5px !important;
   border: 2px solid lightblue;
   border-radius: 10px;
